@@ -11,10 +11,10 @@ const routes: Array<RouteConfig> = [
     component: Home
   },
   {
-    path: "/about",
-    name: "About",
+    path: "/connect",
+    name: "Connect Wallet",
     component: () =>
-      import("../views/About.vue")
+      import("../views/Connect.vue")
   },
   {
     path: '/terms',
