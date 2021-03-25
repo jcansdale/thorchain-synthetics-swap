@@ -21,8 +21,13 @@ export default new Vuex.Store({
       }).sort((a, b) => (a.text > b.text) ? 1 : -1)
     },
     getL1AssetOptions: state => {
-      return state.assetOptions;
-    }
+      return state.assetOptions.map((asset: any) => {
+        return {
+          text: asset.asset,
+          value: asset.asset
+        }
+      }).sort((a, b) => (a.text > b.text) ? 1 : -1)
+    },
   },
   mutations: {
     setUserwallet(state, userwallet){
