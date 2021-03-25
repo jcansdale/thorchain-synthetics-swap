@@ -14,7 +14,6 @@
 <script lang="ts">
 import Synthetics from "@/mixins/Synthetics";
 import Wallet from "@/mixins/Wallet"
-import router from "@/router";
 import {Component , Mixins} from 'vue-property-decorator'
 
 @Component

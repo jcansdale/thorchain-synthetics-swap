@@ -14,7 +14,7 @@
       </b-input-group>
       <b-input-group size="sm">
         <b-form-input value="100" v-model="synthAmount" class="text-right"></b-form-input>
-        <b-form-select :options="options" v-model="selected" @change="calcMint(selected)"/>
+        <b-form-select :options="synthAssetOptions" v-model="selected" @change="calcMint(selected)"/>
       </b-input-group>
     </b-card-text>
     <button v-on:click="mint" v-if="connected">Mint</button>
@@ -27,8 +27,14 @@ import Synthetics from "@/mixins/Synthetics";
 import Wallet from "@/mixins/Wallet"
 import router from "@/router";
 import {Component , Mixins} from 'vue-property-decorator'
+import {mapGetters} from "vuex";
 
-@Component
+@Component({
+  computed: mapGetters({
+    synthAssetOptions: "getSynthAssetOptions",
+    l1AssetOptions: "getL1AssetOptions"
+  })
+})
 export default class Mint extends Mixins(Wallet, Synthetics) {
   selected: any;
 

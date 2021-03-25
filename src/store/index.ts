@@ -16,7 +16,7 @@ export default new Vuex.Store({
       return state.assetOptions.map((asset: any) => {
         return {
           text: "THOR." + asset.asset.split("\.")[1],
-          value: "THOR." + asset.asset.split("\.")[1]
+          value: asset.asset
         }
       }).sort((a, b) => (a.text > b.text) ? 1 : -1)
     },
