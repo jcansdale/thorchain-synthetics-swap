@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-    <b-container class="bv-example-row" v-if="connected">
+  <b-modal id="modalConnect" size="xl">
+    <b-container class="bv-example-row" v-if="isWalletConnected">
       <b-row>
         <b-col />
         <b-col>
@@ -10,14 +10,17 @@
               style="max-width: 200rem;"
               class="mb-2"
           >
-            {{ buf2hex(this.userwallet.pubkey) }}
+            <div v-if="connected">
+              {{ buf2hex(userwallet.pubkey) }}
+
+            </div>
             <button v-on:click="disconnect">Disconnect</button>
           </b-card>
         </b-col>
         <b-col />
       </b-row>
     </b-container>
-    <b-container class="bv-example-row" v-if="!connected">
+    <b-container class="bv-example-row" v-if="!isWalletConnected">
       <b-row>
         <b-col />
         <b-col>
@@ -42,35 +45,28 @@
         <b-col />
       </b-row>
     </b-container>
-  </div>
+  </b-modal>
 </template>
 
 <script lang="ts">
-
 import {Component, Mixins} from "vue-property-decorator";
-import Wallet from "@/mixins/Wallet"
 import {mapGetters} from "vuex";
+import Wallet from "@/mixins/Wallet";
 
 @Component({
-  components: {},
+  components: {
+  },
   computed: mapGetters({
     userwallet : 'getUserwallet',
   })
 })
-export default class Connect extends Mixins(Wallet) {
 
+export default class Home extends Mixins(Wallet) {
   password: string = "";
-  file: any = undefined;
-
-  data() {
-    return {
-      password: "",
-      file: undefined
-    }
-  }
-
-};
-
-
-
+  file: File| null = null;
+}
 </script>
+
+<style scoped>
+
+</style>

@@ -11,12 +11,6 @@ const routes: Array<RouteConfig> = [
     component: Home
   },
   {
-    path: "/connect",
-    name: "Connect Wallet",
-    component: () =>
-      import("../views/Connect.vue")
-  },
-  {
     path: '/terms',
     name: 'Terms',
     component: () =>

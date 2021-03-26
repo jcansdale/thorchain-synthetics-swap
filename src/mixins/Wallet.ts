@@ -13,9 +13,7 @@ import {mapGetters} from "vuex";
     })
 })
 export default class Wallet extends Vue {
-    connected: boolean = false;
     private userwallet!: any;
-    public isWalletConnected!: boolean
 
     async connect(file: File, password: string){
         console.log(file)
@@ -26,18 +24,15 @@ export default class Wallet extends Vue {
             if(typeof read.result === "string"){
                 let userwallet = await Secp256k1HdWallet.deserialize(read.result, password);
                 this.$store.commit('setUserwallet', userwallet);
-                this.connected = userwallet !== null;
             }
         }
         read.onerror = (e) => {
             console.log(e)
-            this.connected = false
         }
     }
 
     disconnect() {
         this.$store.commit('setUserwallet', null);
-        this.connected = false;
     }
 
     async generateKeystore(password: string) {
@@ -49,9 +44,6 @@ export default class Wallet extends Vue {
         link.click()
     }
 
-    mounted() {
-        this.connected = this.userwallet !== undefined;
-    }
 
     buf2hex(buffer: Uint8Array) { // buffer is an ArrayBuffer
         return '0x' + Array.prototype.map.call(new Uint8Array(buffer),

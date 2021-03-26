@@ -1,6 +1,14 @@
 <template>
   <div class="home">
-    <b-container class="bv-example-row">
+    <div id="login-button">
+      <a @click="openModal()">
+        <div>Connect Wallet</div>
+      </a>
+    </div>
+
+    <ConnectModal id="connectWalletModal"></ConnectModal>
+
+    <b-container class="bv-example-row" id="swap-window">
       <b-row>
         <b-col />
         <b-col>
@@ -30,7 +38,7 @@ import Swap from "@/components/Swap.vue"
 import {Component} from "vue-property-decorator";
 import Vue from 'vue'
 import {mapGetters} from "vuex";
-
+import ConnectModal from "@/components/ConnectModal.vue";
 
 
 
@@ -38,7 +46,8 @@ import {mapGetters} from "vuex";
   components: {
     Mint,
     Burn,
-    Swap
+    Swap,
+    ConnectModal
   },
   computed: mapGetters({
     userwallet : 'getUserwallet',
@@ -91,6 +100,22 @@ export default class Home extends Vue {
     this.burnVariant = ""
   }
 
+  openModal(){
+    this.$bvModal.show("modalConnect");
+  }
+
 }
 
 </script>
+
+<style lang="scss">
+#swap-window {
+  margin: 25vh auto 0;
+}
+
+#login-button {
+  position: absolute;
+  top: 2vh;
+  right: 2vw;
+}
+</style>
