@@ -28,6 +28,9 @@ export default new Vuex.Store({
         }
       }).sort((a, b) => (a.text > b.text) ? 1 : -1)
     },
+    isWalletConnected: state => {
+      return state.userwallet !== null
+    }
   },
   mutations: {
     setUserwallet(state, userwallet){

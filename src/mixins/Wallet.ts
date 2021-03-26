@@ -9,11 +9,13 @@ import {mapGetters} from "vuex";
     },
     computed: mapGetters({
         userwallet : 'getUserwallet',
+        isWalletConnected : 'isWalletConnected'
     })
 })
 export default class Wallet extends Vue {
     connected: boolean = false;
     private userwallet!: any;
+    public isWalletConnected!: boolean
 
     async connect(file: File, password: string){
         console.log(file)

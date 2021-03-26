@@ -1,27 +1,44 @@
 import Component from "vue-class-component";
 import Vue from "vue";
 import {Secp256k1HdWallet, SigningCosmosClient} from "@cosmjs/launchpad";
+import {POOL_URL} from "@/common/consts";
 
 @Component
 export default class Synthetics extends Vue{
-    assetDepth: number = 0;
-    runeDepth: number = 0;
-    synthAmount: number = 0;
-    runeAmount: number = 0;
-    options: any
-    synthXAmount: number = 0;
-    synthYAmount: number = 0;
+    mint_assetDepth: number = 0;
+    mint_runeDepth: number = 0;
+    mint_synthAmount: number = 0;
+    mint_runeAmount: number = 0;
 
-    calcMint(asset: string){
-        const apiUrl = 'https://testnet.midgard.thorchain.info/v2/pool/';
+    redeem_assetDepth: number = 0;
+    redeem_runeDepth: number = 0;
+    redeem_synthAmount: number = 0;
+    redeem_runeAmount: number = 0;
 
-        this.$http.get(apiUrl + asset)
-            .then((result: any) => {
-                this.assetDepth = result.data.assetDepth
-                this.runeDepth = result.data.runeDepth
-                this.synthAmount = (Number(this.runeAmount) * Number(this.runeDepth) * Number(this.assetDepth))/
-                    Math.pow((Number(this.runeAmount) + Number(this.runeDepth)), 2)
-            })
+
+    async calcSwap(assetIn: string, assetOut: string){
+        await this.calcRedeem(assetIn)
+        this.mint_runeAmount = this.redeem_runeAmount
+        await this.calcMint(assetOut)
+    }
+
+    async calcMint(asset: string){
+        let result = await this.$http.get(POOL_URL + asset)
+
+        this.mint_assetDepth = result.data.assetDepth
+        this.mint_runeDepth = result.data.runeDepth
+        this.mint_synthAmount = (Number(this.mint_runeAmount) * Number(this.mint_runeDepth) * Number(this.mint_assetDepth))/
+            Math.pow((Number(this.mint_runeAmount) + Number(this.mint_runeDepth)), 2)
+
+    }
+
+    async calcRedeem(asset: string){
+        let result = await this.$http.get(POOL_URL + asset)
+
+        this.redeem_assetDepth = result.data.assetDepth
+        this.redeem_runeDepth = result.data.runeDepth
+        this.redeem_runeAmount = (Number(this.redeem_synthAmount) * Number(this.redeem_assetDepth) * Number(this.redeem_runeDepth))/
+            Math.pow((Number(this.redeem_synthAmount) + Number(this.redeem_assetDepth)), 2)
     }
 
     async mint(){

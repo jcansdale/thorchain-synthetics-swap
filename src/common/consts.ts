@@ -1,0 +1,1 @@
+export const POOL_URL = 'https://testnet.midgard.thorchain.info/v2/pool/'
