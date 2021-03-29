@@ -2,22 +2,29 @@
   <b-card
       title="Swap"
       tag="article"
-      style="max-width: 20rem;"
-      class="mb-2"
   >
     <b-card-text>
-      <b-card-text>
-        <b-input-group size="sm" >
-          <b-form-input value="100" @change="calcSwap(selectedX, selectedY)" v-model="redeem_synthAmount" class="text-right"></b-form-input>
-          <b-form-select :options="synthAssetOptions" v-model="selectedX" @change="calcSwap(selectedX, selectedY)"/>
-        </b-input-group>
-        <b-input-group size="sm">
-          <b-form-input value="100" @change="calcSwap(selectedX, selectedY)" v-model="mint_synthAmount" class="text-right"></b-form-input>
-          <b-form-select :options="synthAssetOptions" v-model="selectedY" @change="calcSwap(selectedX, selectedY)"/>
-        </b-input-group>
-      </b-card-text>
-      <button v-on:click="mint"  v-if="isWalletConnected">Swap</button>
-      <button v-on:click="gotToConnect"  v-if="!isWalletConnected">Connect wallet</button>
+        <b-container class="inner-container" fluid="lg">
+          <b-row>
+            <b-col>
+              <b-input-group size="lg" >
+                <b-form-select :options="synthAssetOptions" v-model="selectedX" @change="calcSwap(selectedX, selectedY)"/>
+                <b-form-input value="100" @change="calcSwap(selectedX, selectedY)" v-model="redeem_synthAmount" class="text-right"></b-form-input>
+              </b-input-group>
+            </b-col>
+            <b-col sm="1" ></b-col>
+            <b-col>
+              <b-input-group size="lg">
+                <b-form-select :options="synthAssetOptions" v-model="selectedY" @change="calcSwap(selectedX, selectedY)"/>
+                <b-form-input value="100" @change="calcSwap(selectedX, selectedY)" v-model="mint_synthAmount" class="text-right"></b-form-input>
+              </b-input-group>
+            </b-col>
+          </b-row>
+          <b-row>
+            <button v-on:click="mint"  v-if="isWalletConnected">Swap</button>
+            <button v-on:click="gotToConnect"  v-if="!isWalletConnected">Connect wallet</button>
+          </b-row>
+        </b-container>
     </b-card-text>
   </b-card>
 </template>

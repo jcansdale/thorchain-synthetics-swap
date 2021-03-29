@@ -2,8 +2,6 @@
   <b-card
       title="Mint"
       tag="article"
-      style="max-width: 20rem;"
-      class="mb-2"
   >
     <b-card-text>
       <b-input-group size="sm" >

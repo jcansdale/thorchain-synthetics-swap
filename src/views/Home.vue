@@ -10,26 +10,45 @@
 
     <b-container class="bv-example-row" id="swap-window">
       <b-row>
-        <b-col />
         <b-col>
           <b-button v-on:click="showMint" v-bind:variant="mintVariant" >Mint</b-button>
           <b-button v-on:click="showSwap" v-bind:variant="swapVariant" >Swap</b-button>
           <b-button v-on:click="showBurn" v-bind:variant="burnVariant" >Burn</b-button>
         </b-col>
-        <b-col />
       </b-row>
       <b-row>
-        <b-col />
         <b-col>
           <Mint v-if="mintView" />
           <Swap v-if="swapView" />
           <Burn v-if="burnView" />
         </b-col>
-        <b-col />
       </b-row>
     </b-container>
   </div>
 </template>
+
+<style lang="scss">
+
+  .swap-container {
+    top: calc(50% - 200px);
+    height: 400px;
+    position: relative;
+
+    .left {
+      background-color: #e91e63;
+    }
+    .right {
+        background-color: #212529;
+    }
+    article{
+      background-color: #212529;
+      border-color: #989898ee;
+      border-radius: 30px;
+      box-shadow: 0 0 10px #23dcc8;
+    }
+  }
+
+</style>
 
 <script lang="ts">
 import Mint from "@/components/Mint.vue"

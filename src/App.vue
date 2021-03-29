@@ -5,6 +5,15 @@
 </template>
 
 <style lang="scss">
+
+html, body{
+  height: 100%;
+}
+
+#view{
+  height: calc(100% - 55px);
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -12,6 +21,8 @@
   text-align: center;
   color: $primary-color;
   font-size: 1.4em;
+  background-color: #212529;
+  height: 100%;
 }
 
 a {
@@ -19,7 +30,8 @@ a {
 }
 
 #nav {
-  padding: 30px;
+  height: 50px;
+  padding: 5px;
 
   a {
     font-weight: bold;
