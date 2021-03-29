@@ -2,11 +2,10 @@
   <b-card
       title="Burn"
       tag="article"
-      style="max-width: 20rem;"
-      class="mb-2"
   >
     <b-card-text>
       <b-card-text>
+
         <b-input-group size="sm" >
           <b-form-input value="100" @change="calcRedeem(selected)" v-model="redeem_synthAmount" class="text-right"></b-form-input>
           <b-form-select :options="synthAssetOptions" v-model="selected" @change="calcRedeem(selected)"/>
