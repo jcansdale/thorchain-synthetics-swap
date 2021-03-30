@@ -1,54 +1,34 @@
 <template>
   <div class="home">
     <div id="login-button">
-      <a @click="openModal()">
-        <div>Connect Wallet</div>
-      </a>
+      <b-button @click="openModal()">
+        Connect Wallet
+      </b-button>
     </div>
 
     <ConnectModal id="connectWalletModal"></ConnectModal>
 
-    <b-container class="bv-example-row" id="swap-window">
-      <b-row>
-        <b-col>
-          <b-button v-on:click="showMint" v-bind:variant="mintVariant" >Mint</b-button>
-          <b-button v-on:click="showSwap" v-bind:variant="swapVariant" >Swap</b-button>
-          <b-button v-on:click="showBurn" v-bind:variant="burnVariant" >Burn</b-button>
-        </b-col>
-      </b-row>
-      <b-row>
-        <b-col>
-          <Mint v-if="mintView" />
-          <Swap v-if="swapView" />
-          <Burn v-if="burnView" />
-        </b-col>
-      </b-row>
-    </b-container>
+    <div id="main-content">
+      <div class="buttons-mode">
+        <button v-on:click="showMint" :class="{activeButton: mintView}" >Mint</button>
+        <button v-on:click="showSwap" :class="{activeButton: swapView}" >Swap</button>
+        <button v-on:click="showBurn" :class="{activeButton: burnView}" >Burn</button>
+      </div>
+
+      <!-- Wait until assets are loaded-->
+      <b-container id="swap-window" v-if="initialized">
+        <b-row>
+          <b-col>
+            <Mint v-if="mintView" />
+            <Swap v-if="swapView" />
+            <Burn v-if="burnView" />
+          </b-col>
+        </b-row>
+      </b-container>
+    </div>
+
   </div>
 </template>
-
-<style lang="scss">
-
-  .swap-container {
-    top: calc(50% - 200px);
-    height: 400px;
-    position: relative;
-
-    .left {
-      background-color: #e91e63;
-    }
-    .right {
-        background-color: #212529;
-    }
-    article{
-      background-color: #212529;
-      border-color: #989898ee;
-      border-radius: 30px;
-      box-shadow: 0 0 10px #23dcc8;
-    }
-  }
-
-</style>
 
 <script lang="ts">
 import Mint from "@/components/Mint.vue"
@@ -59,8 +39,6 @@ import Vue from 'vue'
 import {mapGetters} from "vuex";
 import ConnectModal from "@/components/ConnectModal.vue";
 
-
-
 @Component({
   components: {
     Mint,
@@ -70,6 +48,7 @@ import ConnectModal from "@/components/ConnectModal.vue";
   },
   computed: mapGetters({
     userwallet : 'getUserwallet',
+    initialized: 'getApplicationInitializationState'
   })
 })
 
@@ -78,17 +57,12 @@ export default class Home extends Vue {
   mintView: boolean = false;
   swapView: boolean = true;
   burnView: boolean = false;
-  mintVariant: string = "outline-secondary"
-  swapVariant: string = ""
-  burnVariant: string = "outline-secondary"
 
   reset(){
+    this.$store.commit("resetAssetInput")
     this.mintView = false;
     this.swapView = false;
     this.burnView = false;
-    this.mintVariant = "outline-secondary"
-    this.swapVariant = "outline-secondary"
-    this.burnVariant = "outline-secondary"
   }
 
   beforeMount(){
@@ -104,19 +78,16 @@ export default class Home extends Vue {
   showMint(){
     this.reset()
     this.mintView = true;
-    this.mintVariant = ""
   }
 
   showSwap(){
     this.reset()
     this.swapView = true;
-    this.swapVariant = ""
   }
 
   showBurn(){
     this.reset()
     this.burnView = true;
-    this.burnVariant = ""
   }
 
   openModal(){
@@ -128,13 +99,44 @@ export default class Home extends Vue {
 </script>
 
 <style lang="scss">
-#swap-window {
-  margin: 25vh auto 0;
-}
-
 #login-button {
   position: absolute;
   top: 2vh;
   right: 2vw;
 }
+
+#main-content {
+  margin: 25vh auto 0;
+
+  .buttons-mode {
+    width: 30vw;
+    margin: 0 auto 3em;
+
+    display: flex;
+    justify-content: space-around;
+  }
+
+  #swap-window {
+    background-color: #010a13;
+    border-radius: 50px;
+    border: $secondary-color-light 1.5px solid;
+    box-shadow: 0 7px 30px 5px $secondary-color-glow;
+
+    overflow: hidden;
+
+    .button-execution {
+      margin: 1.5em auto 1.5em;
+      height: 3em;
+      width: 10em;
+
+      background-color: $secondary-color;
+      padding-top: 0.5em;
+      color: black;
+
+      border-radius: 10px;
+      border: 0;
+    }
+  }
+}
+
 </style>

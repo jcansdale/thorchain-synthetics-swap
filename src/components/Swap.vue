@@ -1,54 +1,42 @@
 <template>
-  <b-card
-      title="Swap"
-      tag="article"
-  >
-    <b-card-text>
-        <b-container class="inner-container" fluid="lg">
-          <b-row>
-            <b-col>
-              <b-input-group size="lg" >
-                <b-form-select :options="synthAssetOptions" v-model="selectedX" @change="calcSwap(selectedX, selectedY)"/>
-                <b-form-input value="100" @change="calcSwap(selectedX, selectedY)" v-model="redeem_synthAmount" class="text-right"></b-form-input>
-              </b-input-group>
-            </b-col>
-            <b-col sm="1" ></b-col>
-            <b-col>
-              <b-input-group size="lg">
-                <b-form-select :options="synthAssetOptions" v-model="selectedY" @change="calcSwap(selectedX, selectedY)"/>
-                <b-form-input value="100" @change="calcSwap(selectedX, selectedY)" v-model="mint_synthAmount" class="text-right"></b-form-input>
-              </b-input-group>
-            </b-col>
-          </b-row>
-          <b-row>
-            <button v-on:click="mint"  v-if="isWalletConnected">Swap</button>
-            <button v-on:click="gotToConnect"  v-if="!isWalletConnected">Connect wallet</button>
-          </b-row>
-        </b-container>
-    </b-card-text>
-  </b-card>
+  <div id="swap-container">
+    <div>
+      <b-row>
+          <Asset v-bind:assets="synthAssetOptions" v-bind:is-origin-asset="true"/>
+          <Asset v-bind:assets="synthAssetOptions" v-bind:is-origin-asset="false"/>
+      </b-row>
+      <b-row>
+        <button class="button-execution" v-on:click="swap"  :disabled="!isWalletConnected">SWAP IT</button>
+      </b-row>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
 import Synthetics from "@/mixins/Synthetics";
 import Wallet from "@/mixins/Wallet"
-import router from "@/router";
 import {Component , Mixins} from 'vue-property-decorator'
 import {mapGetters} from "vuex";
 
+import Asset from "@/components/Asset.vue";
+import {EVENT_RECALCULATE} from "@/common/consts";
+
 @Component({
-    computed: mapGetters({
-      synthAssetOptions : 'getSynthAssetOptions',
-    })
+  components: {
+    Asset,
+  },
+  computed: mapGetters({
+    synthAssetOptions : 'getSynthAssetOptions',
+  })
 })
 export default class Swap extends Mixins(Wallet, Synthetics) {
-  selectedX: string = ""
-  selectedY: string = ""
-
-  gotToConnect(){
-    router.push("/connect")
+  beforeMount(){
+    document.addEventListener(EVENT_RECALCULATE, this.calculateSwap)
   }
 
+  beforeDestroy(){
+    document.removeEventListener(EVENT_RECALCULATE, this.calculateSwap)
+  }
 }
 </script>
 

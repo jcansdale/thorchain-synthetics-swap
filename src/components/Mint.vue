@@ -1,49 +1,47 @@
 <template>
-  <b-card
-      title="Mint"
-      tag="article"
-  >
-    <b-card-text>
-      <b-input-group size="sm" >
-        <b-form-input value="100" @change="calcMint(selected)" v-model="mint_runeAmount" class="text-right"></b-form-input>
-        <template #append>
-          <b-input-group-text >THOR.RUNE</b-input-group-text>
-        </template>
-      </b-input-group>
-      <b-input-group size="sm">
-        <b-form-input value="100" v-model="mint_synthAmount" class="text-right"></b-form-input>
-        <b-form-select :options="synthAssetOptions" v-model="selected" @change="calcMint(selected)"/>
-      </b-input-group>
-    </b-card-text>
-    <button v-on:click="mint"  v-if="isWalletConnected">Mint</button>
-    <button v-on:click="gotToConnect"  v-if="!isWalletConnected">Connect wallet</button>
-    {{assetDepth}}
-  </b-card>
+  <div id="mint-container">
+    <div>
+      <b-row>
+          <Asset v-bind:assets="[{text: 'THOR.RUNE', value: 'THOR.RUNE'}]" v-bind:is-origin-asset="true"/>
+          <Asset v-bind:assets="synthAssetOptions" v-bind:is-origin-asset="false"/>
+      </b-row>>
+      <b-row>
+        <button class="button-execution" v-on:click="mint" :disabled="!isWalletConnected">MINT IT</button>
+      </b-row>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
 import Synthetics from "@/mixins/Synthetics";
 import Wallet from "@/mixins/Wallet"
-import router from "@/router";
 import {Component , Mixins} from 'vue-property-decorator'
 import {mapGetters} from "vuex";
+import Asset from "@/components/Asset.vue";
+import {EVENT_RECALCULATE} from "@/common/consts";
+
 
 @Component({
   computed: mapGetters({
     synthAssetOptions: "getSynthAssetOptions",
     l1AssetOptions: "getL1AssetOptions"
-  })
+  }),
+  components: {
+    Asset
+  }
 })
 export default class Mint extends Mixins(Wallet, Synthetics) {
-  selected: any;
-
-  gotToConnect(){
-    router.push("/connect")
+  beforeMount(){
+    document.addEventListener(EVENT_RECALCULATE, this.calculateMint)
   }
 
+  beforeDestroy(){
+    document.removeEventListener(EVENT_RECALCULATE, this.calculateMint)
+  }
 }
 </script>
 
 <style scoped>
+
 
 </style>
