@@ -5,12 +5,14 @@
       <b-form-input class="asset-amount" v-model="amount"></b-form-input>
     </b-row>
     <div class="overview">
-      <span v-if="isOriginAsset">
+      <span class="text-fiat-value" v-if="isOriginAsset">
         {{estimatedOriginValue}} $
       </span>
-      <span v-if="!isOriginAsset">
+      <span class="text-fiat-value" v-if="!isOriginAsset">
         {{estimatedTargetValue}} $
       </span>
+
+      <span class="text-equivalence">approx. equivalent</span>
     </div>
   </div>
 </template>
@@ -20,15 +22,18 @@ import {Component} from 'vue-property-decorator'
 import Vue from 'vue'
 
 import {mapGetters} from "vuex";
-import {EVENT_RECALCULATE} from "@/common/consts";
 import {AssetUpdate} from "@/common/assetUpdate";
+import {BIconArrowRight} from "bootstrap-vue";
 
 @Component({
   props: ["assets", "isOriginAsset"],
   computed: mapGetters({
     estimatedOriginValue: "getEstimatedOriginValue",
     estimatedTargetValue: "getEstimatedTargetValue",
-  })
+  }),
+  components: {
+    BIconArrowRight
+  }
 })
 export default class Asset extends Vue {
   private assets!:any;
@@ -54,7 +59,7 @@ export default class Asset extends Vue {
 
 <style scoped lang="scss">
 .asset-container{
-  background-color: #14252d;
+  background-color: $asset-target-color;
   width: 50%;
   padding: 40px;
   .dropdown{
@@ -65,10 +70,31 @@ export default class Asset extends Vue {
       width: 70%;
     }
   }
+
+  .overview {
+    height: 8em;
+    padding-top: 3em;
+
+    .text-fiat-value {
+      display: block;
+      color: #919191;
+      font-size: 3em;
+      line-height: 1em;
+      width: 100%;
+    }
+
+    .text-equivalence{
+      display: block;
+
+      color: rgba($secondary-color, 0.5);
+      font-size: 1em;
+      width: 100%;
+    }
+  }
 }
 
 .originAsset {
-  background-color: #06141c;
+  background-color: $asset-origin-color;
 }
 
 </style>

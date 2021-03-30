@@ -1,16 +1,24 @@
 <template>
   <div class="home">
-    <div id="login-button">
-      <b-button @click="openModal()">
-        Connect Wallet
-      </b-button>
+    <div id="label-address" v-if="isWalletConnected">
+      <p>{{userwallet.address}}</p>
+    </div>
+
+    <div v-if="!isWalletConnected"  class="login-button">
+      <button @click="openModal()">Connect</button>
+    </div>
+    <div v-if="isWalletConnected" class="login-button">
+      <button @click="alert('to be implemented')">Log out</button>
     </div>
 
     <ConnectModal id="connectWalletModal"></ConnectModal>
 
     <div id="main-content">
+      <h1 id="text-title">
+        Swap your Synths
+      </h1>
       <div class="buttons-mode">
-        <button v-on:click="showMint" :class="{activeButton: mintView}" >Mint</button>
+        <button v-on:click="showMint" v-bind:class="{activeButton: mintView}" >Mint</button>
         <button v-on:click="showSwap" :class="{activeButton: swapView}" >Swap</button>
         <button v-on:click="showBurn" :class="{activeButton: burnView}" >Burn</button>
       </div>
@@ -25,7 +33,17 @@
           </b-col>
         </b-row>
       </b-container>
+
+      <div id="label-fee">
+        <p>FEE Rune Network Fee</p>
+      </div>
     </div>
+
+    <div id="social-container">
+      <BIconGithub/>
+      <BIconTwitter/>
+    </div>
+
 
   </div>
 </template>
@@ -38,22 +56,25 @@ import {Component} from "vue-property-decorator";
 import Vue from 'vue'
 import {mapGetters} from "vuex";
 import ConnectModal from "@/components/ConnectModal.vue";
+import {BIconGithub, BIconTwitter} from "bootstrap-vue";
 
 @Component({
   components: {
     Mint,
     Burn,
     Swap,
-    ConnectModal
+    ConnectModal,
+    BIconGithub,
+    BIconTwitter
   },
   computed: mapGetters({
     userwallet : 'getUserwallet',
-    initialized: 'getApplicationInitializationState'
+    initialized: 'getApplicationInitializationState',
+    isWalletConnected: 'isWalletConnected'
   })
 })
 
 export default class Home extends Vue {
-
   mintView: boolean = false;
   swapView: boolean = true;
   burnView: boolean = false;
@@ -99,21 +120,83 @@ export default class Home extends Vue {
 </script>
 
 <style lang="scss">
-#login-button {
+
+#label-address {
   position: absolute;
   top: 2vh;
-  right: 2vw;
+  right: 17vw;
+  width: 8vw;
+
+  p {
+    overflow: hidden;
+    color: $secondary-color;
+    line-height: 1.7em;
+    text-decoration: underline;
+  }
+}
+
+.login-button {
+  position: absolute;
+  top: 2vh;
+  right: 8vw;
+
+  button {
+
+    height: 40px;
+    width: 140px;
+
+    color: white;
+    background-color: rgba(0,0,0,0);
+    border: $secondary-color 2px solid;
+    border-radius: 10px;
+
+    line-height: 1.7em;
+
+  }
+
 }
 
 #main-content {
-  margin: 25vh auto 0;
+  margin: 18vh auto 0;
+
+  #text-title {
+    font-size: 4em;
+    font-weight: 900;
+    color: white;
+    margin-bottom: 60px;
+  }
 
   .buttons-mode {
     width: 30vw;
-    margin: 0 auto 3em;
+    margin: 0 auto 30px;
 
     display: flex;
     justify-content: space-around;
+
+    button {
+      height: 80px;
+      width: 80px;
+      border-radius: 40px;
+
+      border: $secondary-color-light 2px solid;
+      background-color: transparent;
+      color: white;
+    }
+
+    button:hover {
+      background-color: #0a0c13;
+      color: $secondary-color-light;
+    }
+
+    button:active {
+      background-color: white;
+      color: #0a0c13;
+    }
+
+    activeButton {
+      background-color: $secondary-color;
+      color: #0a0c13;
+    }
   }
 
   #swap-window {
@@ -125,7 +208,7 @@ export default class Home extends Vue {
     overflow: hidden;
 
     .button-execution {
-      margin: 1.5em auto 1.5em;
+      margin: 2em auto 2em;
       height: 3em;
       width: 10em;
 
@@ -136,7 +219,52 @@ export default class Home extends Vue {
       border-radius: 10px;
       border: 0;
     }
+
+    .assets-container {
+      position: relative;
+      .symbol-arrow {
+        position: absolute;
+        top: 6.4em;
+        left: calc(50% - 1.75em);
+
+        width: 3.5em;
+        height: 3.5em;
+
+        border-radius: 20px;
+        background-color: $asset-origin-color;
+
+        .arrow-container {
+          width: 2.5em;
+          height: 2.5em;
+          margin: 0.5em;
+
+          line-height: 2.75em;
+
+          background-color: $secondary-color;
+          border-radius: 10px;
+        }
+      }
+    }
+  }
+
+  #label-fee {
+    margin-top: 3em;
+    color: $secondary-color-light;
   }
 }
+
+#social-container {
+  display: flex;
+  justify-content: space-around;
+
+  position: absolute;
+  bottom: 8vh;
+  right: 8vw;
+
+  width: 5vw;
+  font-size: 1.5em;
+  color: $secondary-color;
+}
+
 
 </style>

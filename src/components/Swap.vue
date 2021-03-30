@@ -1,14 +1,20 @@
 <template>
   <div id="swap-container">
-    <div>
+    <div class="assets-container">
       <b-row>
-          <Asset v-bind:assets="synthAssetOptions" v-bind:is-origin-asset="true"/>
-          <Asset v-bind:assets="synthAssetOptions" v-bind:is-origin-asset="false"/>
+        <Asset v-bind:assets="synthAssetOptions" v-bind:is-origin-asset="true"/>
+        <Asset v-bind:assets="synthAssetOptions" v-bind:is-origin-asset="false"/>
       </b-row>
-      <b-row>
-        <button class="button-execution" v-on:click="swap"  :disabled="!isWalletConnected">SWAP IT</button>
-      </b-row>
+
+      <div class="symbol-arrow">
+        <div class="arrow-container">
+          <BIconArrowRight/>
+        </div>
+      </div>
     </div>
+    <b-row>
+      <button class="button-execution" v-on:click="swap"  :disabled="!isWalletConnected">SWAP IT</button>
+    </b-row>
   </div>
 </template>
 

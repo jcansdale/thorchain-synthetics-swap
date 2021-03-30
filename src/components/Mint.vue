@@ -1,14 +1,21 @@
 <template>
   <div id="mint-container">
-    <div>
+    <div class="assets-container">
       <b-row>
-          <Asset v-bind:assets="[{text: 'THOR.RUNE', value: 'THOR.RUNE'}]" v-bind:is-origin-asset="true"/>
-          <Asset v-bind:assets="synthAssetOptions" v-bind:is-origin-asset="false"/>
-      </b-row>>
-      <b-row>
-        <button class="button-execution" v-on:click="mint" :disabled="!isWalletConnected">MINT IT</button>
+        <Asset v-bind:assets="[{text: 'THOR.RUNE', value: 'THOR.RUNE'}]" v-bind:is-origin-asset="true"/>
+        <Asset v-bind:assets="synthAssetOptions" v-bind:is-origin-asset="false"/>
       </b-row>
+
+      <div class="symbol-arrow">
+        <div class="arrow-container">
+          <BIconArrowRight/>
+        </div>
+      </div>
     </div>
+
+    <b-row>
+      <button class="button-execution" v-on:click="mint" :disabled="!isWalletConnected">MINT IT</button>
+    </b-row>
   </div>
 </template>
 
