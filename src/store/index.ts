@@ -24,18 +24,10 @@ export default new Vuex.Store({
     getUserwallet: state => {
       return state.userwallet;
     },
-    getSynthAssetOptions: state => {
+    getAssetOptions: state => {
       return state.assetOptions.map((asset: any) => {
         return {
-          text: "THOR." + asset.asset.split("\.")[1],
-          value: asset.asset
-        }
-      }).sort((a, b) => (a.text > b.text) ? 1 : -1)
-    },
-    getL1AssetOptions: state => {
-      return state.assetOptions.map((asset: any) => {
-        return {
-          text: asset.asset,
+          text: asset.asset.split("\.")[1].split("-")[0],
           value: asset.asset
         }
       }).sort((a, b) => (a.text > b.text) ? 1 : -1)

@@ -13,7 +13,8 @@
       </div>
     </div>
     <b-row>
-      <button class="button-execution" v-on:click="swap"  :disabled="!isWalletConnected">SWAP IT</button>
+      <button v-if="isWalletConnected" class="button-execution" v-on:click="swap" >SWAP IT</button>
+      <button v-if="!isWalletConnected" class="button-connect" @click="$bvModal.show('modalConnect')">Connect</button>
     </b-row>
   </div>
 </template>
@@ -32,7 +33,7 @@ import {EVENT_RECALCULATE} from "@/common/consts";
     Asset,
   },
   computed: mapGetters({
-    synthAssetOptions : 'getSynthAssetOptions',
+    synthAssetOptions : 'getAssetOptions',
   })
 })
 export default class Swap extends Mixins(Wallet, Synthetics) {

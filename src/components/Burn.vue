@@ -3,7 +3,7 @@
     <div class="assets-container">
       <b-row>
         <Asset v-bind:assets="synthAssetOptions" v-bind:is-origin-asset="true"/>
-        <Asset v-bind:assets="[{text: 'THOR.RUNE', value: 'THOR.RUNE'}]" v-bind:is-origin-asset="false"/>
+        <Asset v-bind:assets="[{text: 'RUNE', value: 'THOR.RUNE'}]" v-bind:is-origin-asset="false"/>
       </b-row>
 
       <div class="symbol-arrow">
@@ -13,7 +13,8 @@
       </div>
     </div>
     <b-row>
-      <button class="button-execution" v-on:click="burn" :disabled="!isWalletConnected">BURN IT</button>
+      <button v-if="isWalletConnected" class="button-execution" v-on:click="burn" >BURN IT</button>
+      <button v-if="!isWalletConnected" class="button-connect" @click="$bvModal.show('modalConnect')">Connect</button>
     </b-row>
   </div>
 </template>
@@ -28,8 +29,8 @@ import {EVENT_RECALCULATE} from "@/common/consts";
 
 @Component({
   computed: mapGetters({
-    synthAssetOptions : 'getSynthAssetOptions',
-    l1AssetOptions : 'getL1AssetOptions',
+    synthAssetOptions : 'getAssetOptions',
+    l1AssetOptions : 'getAssetOptions',
   }),
   components: {
     Asset

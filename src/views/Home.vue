@@ -5,7 +5,7 @@
     </div>
 
     <div v-if="!isWalletConnected"  class="login-button">
-      <button @click="openModal()">Connect</button>
+      <button @click="$bvModal.show('modalConnect')">Connect</button>
     </div>
     <div v-if="isWalletConnected" class="login-button">
       <button @click="alert('to be implemented')">Log out</button>
@@ -110,12 +110,7 @@ export default class Home extends Vue {
     this.reset()
     this.burnView = true;
   }
-
-  openModal(){
-    this.$bvModal.show("modalConnect");
   }
-
-}
 
 </script>
 
@@ -141,7 +136,6 @@ export default class Home extends Vue {
   right: 8vw;
 
   button {
-
     height: 40px;
     width: 140px;
 
@@ -151,13 +145,17 @@ export default class Home extends Vue {
     border-radius: 10px;
 
     line-height: 1.7em;
+  }
 
+  button:hover {
+    color: #0a0c13;
+    background-color: $secondary-color;
   }
 
 }
 
 #main-content {
-  margin: 18vh auto 0;
+  margin: 15vh auto 0;
 
   #text-title {
     font-size: 4em;
@@ -181,6 +179,7 @@ export default class Home extends Vue {
       border: $secondary-color-light 2px solid;
       background-color: transparent;
       color: white;
+      outline: none;
     }
 
     button:hover {
@@ -189,13 +188,14 @@ export default class Home extends Vue {
     }
 
     button:active {
-      background-color: white;
+      background-color: $secondary-color;
       color: #0a0c13;
     }
 
-    activeButton {
-      background-color: $secondary-color;
+    .activeButton {
+      background-color: $secondary-color-light;
       color: #0a0c13;
+      box-shadow: 0 0 40px 20px black;
     }
   }
 
@@ -220,11 +220,29 @@ export default class Home extends Vue {
       border: 0;
     }
 
+    .button-connect {
+      margin: 2em auto 2em;
+      height: 3em;
+      width: 10em;
+
+      background-color: transparent;
+      padding-top: 0.5em;
+      color: white;
+
+      border-radius: 10px;
+      border: 2px $secondary-color solid;
+    }
+
+    .button-connect:hover {
+      background-color: $secondary-color;
+      color: #0a0c13;
+    }
+
     .assets-container {
       position: relative;
       .symbol-arrow {
         position: absolute;
-        top: 6.4em;
+        top: 5.2em;
         left: calc(50% - 1.75em);
 
         width: 3.5em;
@@ -250,6 +268,7 @@ export default class Home extends Vue {
   #label-fee {
     margin-top: 3em;
     color: $secondary-color-light;
+    font-size: 0.7em;
   }
 }
 
@@ -258,7 +277,7 @@ export default class Home extends Vue {
   justify-content: space-around;
 
   position: absolute;
-  bottom: 8vh;
+  bottom: 5vh;
   right: 8vw;
 
   width: 5vw;
