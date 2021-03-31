@@ -201,11 +201,10 @@ export default class Home extends Vue {
 
   #swap-window {
     background-color: #010a13;
-    border-radius: 50px;
+    border-radius: $main-window-border-radius;
     border: $secondary-color-light 1.5px solid;
     box-shadow: 0 7px 30px 5px $secondary-color-glow;
 
-    overflow: hidden;
 
     .button-execution {
       margin: 2em auto 2em;
