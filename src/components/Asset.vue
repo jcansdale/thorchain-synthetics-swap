@@ -32,6 +32,7 @@
                  @mousedown="selectedAsset = asset; open=false; updateAsset()"
                  class="items">
               <hr>
+              <b-img :src="getImageURL(asset.text)" class="image-currency"/>
               {{asset.text}}
             </div>
           </div>
@@ -102,6 +103,18 @@ export default class Asset extends Vue {
         true
     ))
   }
+
+  getImageURL(asset:string) {
+    let images = require.context("../assets/images/icons/", false, /\.png$/)
+    let image
+    try {
+      image = images('./' + asset + '.png')
+      return image
+    }
+    catch(e) {
+      return null
+    }
+  }
 }
 </script>
 
@@ -163,6 +176,7 @@ export default class Asset extends Vue {
         cursor: pointer;
         backdrop-filter: blur(30px);
         background-color: $dropdown-menu-color-transparent;
+        overflow: hidden;
 
         .items-search-box {
           position: relative;
@@ -170,6 +184,7 @@ export default class Asset extends Vue {
           padding: 10px 5px 10px;
 
           .input-search {
+            width: 90%;
             background-color: rgba(#e3e3e3, 0.3);
             color: white;
             border: white solid 1px;
@@ -190,6 +205,15 @@ export default class Asset extends Vue {
           max-height: 15em;
           overflow-y: auto;
           scrollbar-width: none;
+
+          .items{
+            text-align: left;
+            .image-currency {
+              width: 20px;
+              height: auto;
+              margin: 0 20px 0;
+            }
+          }
 
           .items:hover {
             background-color: $dropdown-menu-color-transparent-highlight;
