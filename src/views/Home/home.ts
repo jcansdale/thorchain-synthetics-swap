@@ -25,8 +25,8 @@ import {BIconGithub, BIconTwitter} from "bootstrap-vue";
 })
 
 export default class Home extends Vue {
-    mintView: boolean = false;
-    swapView: boolean = true;
+    mintView: boolean = true;
+    swapView: boolean = false;
     burnView: boolean = false;
 
     reset(){

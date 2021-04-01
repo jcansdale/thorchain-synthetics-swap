@@ -31,7 +31,6 @@ export default class Synthetics extends Vue{
     redeem_runeAmount: number = 0;
 
     async calculateMint() {
-        console.log("Calculating Mint")
         await this.calculateMintWithRune(this.originAssetAmount)
     }
 
@@ -42,29 +41,47 @@ export default class Synthetics extends Vue{
     }
 
     async calculateMintWithRune(runeAmount: number){
-        console.log("Calling URL: " + POOL_URL + this.targetAsset)
-        let result = await this.$http.get(POOL_URL + this.targetAsset)
+        console.log("Calculating mint: " + this.targetAsset.value)
+        let result = await this.$http.get(POOL_URL + this.targetAsset.value)
+        console.log("Rune Amount: " + runeAmount)
+        console.log("Rune Depth: " + result.data.runeDepth)
+        console.log("Asset Depth: " + result.data.assetDepth)
 
-        this.mint_synthAmount = (runeAmount * Number(result.data.runeDepth) * Number(result.data.assetDepth))/
+        // ( r * R * A)/(r + R)^2
+        this.mint_synthAmount = (runeAmount * Number(result.data.runeDepth) * Number(result.data.assetDepth)) /
             Math.pow((runeAmount + Number(result.data.runeDepth)), 2)
+
+        console.log(this.mint_synthAmount)
 
         this.$store.commit("updateAssetInput", new AssetUpdate(
             this.targetAsset,
-            this.mint_synthAmount,
+            Math.round(this.mint_synthAmount * 10000) / 10000,
             false,
             false
         ))
     }
 
     async calculateRedeem(){
-        console.log("Calculating Redeem")
+        console.debug("Calculate redeem: " + this.originAsset.value)
 
-        let result = await this.$http.get(POOL_URL + this.originAsset)
+        let result = await this.$http.get(POOL_URL + this.originAsset.value)
 
         this.redeem_assetDepth = result.data.assetDepth
         this.redeem_runeDepth = result.data.runeDepth
-        this.redeem_runeAmount = (Number(this.redeem_synthAmount) * Number(this.redeem_assetDepth) * Number(this.redeem_runeDepth))/
+
+        // (s * A *  R)/(a + A)^2
+        this.redeem_runeAmount = (Number(this.originAssetAmount) * Number(this.redeem_assetDepth) * Number(this.redeem_runeDepth))/
             Math.pow((Number(this.redeem_synthAmount) + Number(this.redeem_assetDepth)), 2)
+
+        console.log("Rune for asset: " + this.redeem_runeAmount)
+
+        this.$store.commit("updateAssetInput", new AssetUpdate(
+            this.targetAsset,
+            Math.round(this.redeem_runeAmount * 10000) / 10000,
+            false,
+            false
+        ))
+
     }
 
     async mint(){

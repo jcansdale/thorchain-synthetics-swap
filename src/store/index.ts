@@ -69,20 +69,23 @@ export default new Vuex.Store({
       state.targetAssetAmount = 0
     },
     updateAssetInput(state, update: AssetUpdate) {
-      console.log(update)
-
       if(update.isOriginAsset) {
-        state.originAsset = update.asset
+        if(update.asset !== state.originAsset) {
+          state.originAsset = update.asset
+        }
         state.originAssetAmount = update.assetAmount
+
       } else {
-        state.targetAsset = update.asset
+        if(update.asset !== state.targetAsset) {
+          state.targetAsset = update.asset
+        }
         state.targetAssetAmount = update.assetAmount
       }
 
       // Trigger first calculation when both assets are decided
       // Don't trigger when update was applied by calculations
       if(update.manualUpdate && state.targetAsset !== "" && state.originAsset !== "") {
-        console.log("Dispatched ka-chow")
+        console.log("TRIGGER")
         document.dispatchEvent(new Event(EVENT_RECALCULATE))
       }
     },

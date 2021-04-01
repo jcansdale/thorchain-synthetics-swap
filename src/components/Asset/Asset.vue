@@ -41,7 +41,9 @@
         </div>
       </div>
 
-      <input class="asset-amount" v-model="amount"/>
+      <input v-if="isOriginAsset" class="asset-amount" v-model="amount" :onchange="updateAsset()"/>
+      <input v-if="!isOriginAsset" class="asset-amount" v-model="targetAssetAmount"/>
+
     </div>
     <hr>
 

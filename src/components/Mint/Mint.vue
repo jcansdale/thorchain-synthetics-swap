@@ -40,7 +40,7 @@ import {EVENT_RECALCULATE} from "@/common/consts";
 })
 export default class Mint extends Mixins(Wallet, Synthetics) {
   beforeMount(){
-    document.addEventListener(EVENT_RECALCULATE, this.calculateMint)
+    document.addEventListener(EVENT_RECALCULATE, this.calculateMint, false)
   }
 
   beforeDestroy(){

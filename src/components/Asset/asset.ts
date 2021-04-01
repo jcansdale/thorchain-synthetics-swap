@@ -10,6 +10,7 @@ import {BIconArrowRight, BIconChevronDown, BIconChevronUp, BIconSearch, BIconXCi
     computed: mapGetters({
         estimatedOriginValue: "getEstimatedOriginValue",
         estimatedTargetValue: "getEstimatedTargetValue",
+        targetAssetAmount: "getTargetAssetAmount"
     }),
     components: {
         BIconArrowRight,
@@ -22,7 +23,7 @@ import {BIconArrowRight, BIconChevronDown, BIconChevronUp, BIconSearch, BIconXCi
 export default class Asset extends Vue {
     private assets!:any
     private selectedAsset: any
-    private amount: number = 0
+    private amount: number = 1
     private isOriginAsset!: boolean
 
     private open: boolean = false
