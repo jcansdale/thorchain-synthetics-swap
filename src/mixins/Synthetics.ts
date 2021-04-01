@@ -48,8 +48,8 @@ export default class Synthetics extends Vue{
         console.log("Asset Depth: " + result.data.assetDepth)
 
         // ( r * R * A)/(r + R)^2
-        this.mint_synthAmount = (runeAmount * Number(result.data.runeDepth) * Number(result.data.assetDepth)) /
-            Math.pow((runeAmount + Number(result.data.runeDepth)), 2)
+        this.mint_synthAmount = (Number(runeAmount) * Number(result.data.runeDepth) * Number(result.data.assetDepth)) /
+            Math.pow((Number(runeAmount) + Number(result.data.runeDepth)), 2)
 
         console.log(this.mint_synthAmount)
 
