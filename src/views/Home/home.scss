@@ -1,120 +1,4 @@
-<template>
-  <div class="home">
-    <div id="label-address" v-if="isWalletConnected">
-      <p>{{userwallet.address}}</p>
-    </div>
 
-    <div v-if="!isWalletConnected"  class="login-button">
-      <button @click="$bvModal.show('modalConnect')">Connect</button>
-    </div>
-    <div v-if="isWalletConnected" class="login-button">
-      <button @click="alert('to be implemented')">Log out</button>
-    </div>
-
-    <ConnectModal id="connectWalletModal"></ConnectModal>
-
-    <div id="main-content">
-      <h1 id="text-title">
-        Swap your Synths
-      </h1>
-      <div class="buttons-mode">
-        <button v-on:click="showMint" v-bind:class="{activeButton: mintView}" >Mint</button>
-        <button v-on:click="showSwap" :class="{activeButton: swapView}" >Swap</button>
-        <button v-on:click="showBurn" :class="{activeButton: burnView}" >Burn</button>
-      </div>
-
-      <!-- Wait until assets are loaded-->
-      <b-container id="swap-window" v-if="initialized">
-        <b-row>
-          <b-col>
-            <Mint v-if="mintView" />
-            <Swap v-if="swapView" />
-            <Burn v-if="burnView" />
-          </b-col>
-        </b-row>
-      </b-container>
-
-      <div id="label-fee">
-        <p>FEE Rune Network Fee</p>
-      </div>
-    </div>
-
-    <div id="social-container">
-      <BIconGithub/>
-      <BIconTwitter/>
-    </div>
-
-
-  </div>
-</template>
-
-<script lang="ts">
-import Mint from "@/components/Mint.vue"
-import Burn from "@/components/Burn.vue"
-import Swap from "@/components/Swap.vue"
-import {Component} from "vue-property-decorator";
-import Vue from 'vue'
-import {mapGetters} from "vuex";
-import ConnectModal from "@/components/ConnectModal.vue";
-import {BIconGithub, BIconTwitter} from "bootstrap-vue";
-
-@Component({
-  components: {
-    Mint,
-    Burn,
-    Swap,
-    ConnectModal,
-    BIconGithub,
-    BIconTwitter
-  },
-  computed: mapGetters({
-    userwallet : 'getUserwallet',
-    initialized: 'getApplicationInitializationState',
-    isWalletConnected: 'isWalletConnected'
-  })
-})
-
-export default class Home extends Vue {
-  mintView: boolean = false;
-  swapView: boolean = true;
-  burnView: boolean = false;
-
-  reset(){
-    this.$store.commit("resetAssetInput")
-    this.mintView = false;
-    this.swapView = false;
-    this.burnView = false;
-  }
-
-  beforeMount(){
-    const apiUrl = 'https://testnet.midgard.thorchain.info/v2/pools';
-    this.$http.get(apiUrl)
-        .then((value: any) => {
-          this.$store.commit("setAssetOptions", value.data.map((asset: any) => {
-            return { "asset": asset.asset }
-          }));
-        });
-  }
-
-  showMint(){
-    this.reset()
-    this.mintView = true;
-  }
-
-  showSwap(){
-    this.reset()
-    this.swapView = true;
-  }
-
-  showBurn(){
-    this.reset()
-    this.burnView = true;
-  }
-  }
-
-</script>
-
-<style lang="scss">
 
 #label-address {
   position: absolute;
@@ -241,7 +125,7 @@ export default class Home extends Vue {
       position: relative;
       .symbol-arrow {
         position: absolute;
-        top: 5.2em;
+        top: 5.8em;
         left: calc(50% - 1.75em);
 
         width: 3.5em;
@@ -281,8 +165,16 @@ export default class Home extends Vue {
 
   width: 5vw;
   font-size: 1.5em;
-  color: $secondary-color;
+
+  a {
+    text-decoration: none;
+    color: $secondary-color;
+  }
+
 }
 
-
-</style>
+@supports (-moz-appearance:none) {
+  #main-content #swap-window .assets-container .symbol-arrow {
+    top: 5.5em;
+  }
+}

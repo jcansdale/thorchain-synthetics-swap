@@ -11,6 +11,8 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  vertical-align: middle;
+
   color: $primary-color;
   font-size: 1.4em;
 

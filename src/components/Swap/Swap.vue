@@ -25,7 +25,7 @@ import Wallet from "@/mixins/Wallet"
 import {Component , Mixins} from 'vue-property-decorator'
 import {mapGetters} from "vuex";
 
-import Asset from "@/components/Asset.vue";
+import Asset from "@/components/Asset/Asset.vue";
 import {EVENT_RECALCULATE} from "@/common/consts";
 
 @Component({
