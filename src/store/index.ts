@@ -85,7 +85,6 @@ export default new Vuex.Store({
       // Trigger first calculation when both assets are decided
       // Don't trigger when update was applied by calculations
       if(update.manualUpdate && state.targetAsset !== "" && state.originAsset !== "") {
-        console.log("TRIGGER")
         document.dispatchEvent(new Event(EVENT_RECALCULATE))
       }
     },
