@@ -1,7 +1,15 @@
 <template>
-  <div id="swap-container">
+  <div id="swap">
+    <b-tabs justified
+      active-nav-item-class="active-tab"
+    >
+      <b-tab title="Mint" :title-link-class="['tab', 'top-left-radius']" @click="toggle('mint')"></b-tab>
+      <b-tab title="Swap" :title-link-class="'tab'"  @click="toggle('swap')"></b-tab>
+      <b-tab title="Burn" :title-link-class="['tab', 'top-right-radius']"  @click="toggle('burn')"></b-tab>
+    </b-tabs>
+
     <div class="assets-container">
-      <b-row>
+      <b-row class="m-0">
         <Asset v-bind:assets="synthAssetOptions" v-bind:is-origin-asset="true"/>
         <Asset v-bind:assets="synthAssetOptions" v-bind:is-origin-asset="false"/>
       </b-row>
@@ -12,6 +20,7 @@
         </div>
       </div>
     </div>
+
     <b-row>
       <button v-if="isWalletConnected" class="button-execution" v-on:click="swap" >SWAP IT</button>
       <button v-if="!isWalletConnected" class="button-connect" @click="$bvModal.show('modalConnect')">Connect</button>
@@ -19,34 +28,5 @@
   </div>
 </template>
 
-<script lang="ts">
-import Synthetics from "@/mixins/Synthetics";
-import Wallet from "@/mixins/Wallet"
-import {Component , Mixins} from 'vue-property-decorator'
-import {mapGetters} from "vuex";
-
-import Asset from "@/components/Asset/Asset.vue";
-import {EVENT_RECALCULATE} from "@/common/consts";
-
-@Component({
-  components: {
-    Asset,
-  },
-  computed: mapGetters({
-    synthAssetOptions : 'getAssetOptions',
-  })
-})
-export default class Swap extends Mixins(Wallet, Synthetics) {
-  beforeMount(){
-    document.addEventListener(EVENT_RECALCULATE, this.calculateSwap)
-  }
-
-  beforeDestroy(){
-    document.removeEventListener(EVENT_RECALCULATE, this.calculateSwap)
-  }
-}
-</script>
-
-<style scoped>
-
-</style>
+<script lang="ts" src="./swap.ts"></script>
+<style lang="scss" src="./swap.scss"></style>

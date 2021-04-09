@@ -1,0 +1,33 @@
+#swap{
+  .tabs{
+    width: 100%;
+    li {
+      .tab{
+        background-color: transparent;
+        outline: none;
+        color: white;
+        border: none ;
+        &:hover{
+          background-color: #0a0c13;
+          color: $secondary-color-light;
+        }
+        &:focus{
+          background-color: $secondary-color-light;
+          color: #0a0c13;
+          font-weight: bold;
+        }
+        &.top-left-radius{
+          border-radius: $main-window-border-radius 0 0 0 ;
+        }
+        &.top-right-radius{
+          border-radius: 0 $main-window-border-radius 0 0 ;
+        }
+      }
+      .active-tab{
+        background-color: $secondary-color-light;
+        color: #0a0c13;
+        font-weight: bold;
+      }
+    }
+  }
+}
