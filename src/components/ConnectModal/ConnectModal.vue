@@ -35,8 +35,7 @@
         </b-col>
       </b-row>
     </b-container>
-
-
+    
     <!-- MODAL FOOTER -->
     <template #modal-footer>
       <b-button v-on:click="$bvModal.hide('modalConnect')">Cancel</b-button>
@@ -45,25 +44,5 @@
   </b-modal>
 </template>
 
-<script lang="ts">
-import {Component, Mixins} from "vue-property-decorator";
-import {mapGetters} from "vuex";
-import Wallet from "@/mixins/Wallet";
-
-@Component({
-  components: {
-  },
-  computed: mapGetters({
-    userwallet : 'getUserwallet',
-  })
-})
-
-export default class Home extends Mixins(Wallet) {
-  password: string = "";
-  file: File| null = null;
-}
-</script>
-
-<style scoped>
-
-</style>
+<script lang="ts" src="./connectModal.ts"></script>
+<style scoped lang="scss" src="./connectModal.scss"></style>

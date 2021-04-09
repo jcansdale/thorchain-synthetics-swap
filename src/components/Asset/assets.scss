@@ -3,7 +3,6 @@
   background-color: $asset-target-color;
   width: 50%;
   padding: 10px 40px;
-  border-top-right-radius: $main-window-border-radius;
 
   hr {
     width: 90%;
@@ -158,8 +157,6 @@
 
 .originAsset {
   background-color: $asset-origin-color;
-  border-top-left-radius: $main-window-border-radius;
-  border-top-right-radius: 0;
 }
 
 @supports (-moz-appearance:none) {

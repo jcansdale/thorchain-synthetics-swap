@@ -24,6 +24,10 @@ export default class Synthetics extends Vue{
     mint_synthAmount: number = 0;
     redeem_runeAmount: number = 0;
 
+    async calculate(action: any){
+        console.log(action)
+    }
+
     async calculateMint() {
         console.log("MINT")
         await this.calculateMintWithRune(this.originAssetAmount)
