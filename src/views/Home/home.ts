@@ -29,6 +29,6 @@ export default class Home extends Vue {
                 this.$store.commit("setAssetOptions", value.data.map((asset: any) => {
                     return { "asset": asset.asset }
                 }));
-            });
+            })
     }
 }

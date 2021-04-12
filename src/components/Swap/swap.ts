@@ -15,10 +15,19 @@ import {EVENT_RECALCULATE} from "@/common/consts";
     })
 })
 export default class Swap extends Mixins(Wallet, Synthetics) {
-    activeTab: string = 'mint'
+
+    synthAssetOptions : object[] | undefined
+
+    private readonly runeAsset = [{text: 'RUNE', value: 'THOR.RUNE'}]
 
     toggle(action: string){
-        this.activeTab = action
+        this.$store.commit("setAction", action)
+    }
+
+    synthAssets(originAsset: boolean){
+        if(this.activeAction === "mint" && originAsset) return this.runeAsset;
+        if(this.activeAction === "burn" && !originAsset) return this.runeAsset;
+        return this.synthAssetOptions;
     }
 
     beforeMount(){

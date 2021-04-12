@@ -9,6 +9,7 @@ export default new Vuex.Store({
   state: {
     applicationInitialized: false,
     userwallet: null,
+    action: "mint",
     assetOptions: [],
     originAsset: "",
     originAssetAmount: 0,
@@ -23,6 +24,9 @@ export default new Vuex.Store({
     },
     getUserwallet: state => {
       return state.userwallet;
+    },
+    getAction: state => {
+      return state.action;
     },
     getAssetOptions: state => {
       return state.assetOptions.map((asset: any) => {
@@ -57,6 +61,9 @@ export default new Vuex.Store({
   mutations: {
     setUserwallet(state, userwallet){
       state.userwallet = userwallet;
+    },
+    setAction(state, action){
+      state.action = action;
     },
     setAssetOptions(state, assetOptions){
       state.assetOptions = assetOptions;

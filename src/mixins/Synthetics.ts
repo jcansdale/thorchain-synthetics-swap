@@ -9,7 +9,8 @@ import {AssetUpdate} from "@/common/assetUpdate";
     computed: mapGetters ({
         originAsset: "getOriginAssetValue",
         originAssetAmount: "getOriginAssetAmount",
-        targetAsset: "getTargetAssetValue"
+        targetAsset: "getTargetAssetValue",
+        activeAction: "getAction"
     })
 
 })
@@ -18,26 +19,25 @@ export default class Synthetics extends Vue{
     private originAssetAmount!: number
     private targetAsset!:any
 
+    activeAction!: string
+
     // Calculation currently only one-sided. No target to orgin supportet yet.
     // private targetAssetAmount!: number
 
     mint_synthAmount: number = 0;
     redeem_runeAmount: number = 0;
 
-    async calculate(action: any){
-        console.log(action)
-    }
-
-    async calculateMint() {
-        console.log("MINT")
-        await this.calculateMintWithRune(this.originAssetAmount)
-    }
-
-    async calculateSwap(){
-        console.log("SWAP")
-
-        await this.calculateRedeem()
-        await this.calculateMintWithRune(this.redeem_runeAmount)
+    async calculate(){
+        if(this.activeAction === "mint") {
+            await this.calculateMintWithRune(this.originAssetAmount)
+        }
+        else if (this.activeAction === "swap"){
+            await this.calculateRedeem()
+            await this.calculateMintWithRune(this.redeem_runeAmount)
+        }
+        else if (this.activeAction === "burn"){
+            await this.calculateRedeem()
+        }
     }
 
     async calculateMintWithRune(runeAmount: number){

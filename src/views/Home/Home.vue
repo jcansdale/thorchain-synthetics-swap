@@ -14,8 +14,6 @@
     <ConnectModal id="connectWalletModal"></ConnectModal>
 
     <div id="main-content">
-
-
       <!-- Wait until assets are loaded-->
       <h1 id="text-title">Swap your Synths</h1>
       <b-container id="swap-window" v-if="initialized">

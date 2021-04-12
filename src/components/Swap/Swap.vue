@@ -1,17 +1,15 @@
 <template>
   <div id="swap">
-    <b-tabs justified
-      active-nav-item-class="active-tab"
-    >
-      <b-tab title="Mint" :title-link-class="['tab', 'top-left-radius']" @click="toggle('mint')"></b-tab>
-      <b-tab title="Swap" :title-link-class="'tab'"  @click="toggle('swap')"></b-tab>
-      <b-tab title="Burn" :title-link-class="['tab', 'top-right-radius']"  @click="toggle('burn')"></b-tab>
-    </b-tabs>
+    <b-button-group class="tabs">
+      <b-button class="tab" @click="toggle('mint')">Mint</b-button>
+      <b-button class="tab" @click="toggle('swap')">Swap</b-button>
+      <b-button class="tab" @click="toggle('burn')">Burn</b-button>
+    </b-button-group>
 
     <div class="assets-container">
       <b-row class="m-0">
-        <Asset v-bind:assets="synthAssetOptions" v-bind:is-origin-asset="true"/>
-        <Asset v-bind:assets="synthAssetOptions" v-bind:is-origin-asset="false"/>
+        <Asset :assets="synthAssets(true)" v-bind:is-origin-asset="true"/>
+        <Asset :assets="synthAssets(false)" v-bind:is-origin-asset="false"/>
       </b-row>
 
       <div class="symbol-arrow">
