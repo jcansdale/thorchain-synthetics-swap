@@ -1,4 +1,4 @@
-import {Component} from 'vue-property-decorator'
+import {Component, Watch} from 'vue-property-decorator'
 import Vue from 'vue'
 
 import {mapGetters} from "vuex";
@@ -54,5 +54,10 @@ export default class Asset extends Vue {
         catch(e) {
             return null
         }
+    }
+
+    @Watch("assets")
+    onAssetsChange() {
+        console.log(this)
     }
 }

@@ -1,21 +1,22 @@
 #swap{
+  width: 100%;
   .tabs{
-    width: 100%;
+    width: inherit;
     border-bottom: $secondary-color-light 1.5px solid;
     .tab{
       background-color: transparent;
       outline: none;
       color: white;
       font-size: 1.1em;
-      //&:hover{
-      //  background-color: $secondary-color-light;
-      //  color: #0a0c13;
-      //}
-      //&:focus{
-      //  background-color: $secondary-color-light;
-      //  color: #0a0c13;
-      //  font-weight: bold;
-      //}
+      &:hover{
+        background-color: $secondary-color-light;
+        color: #0a0c13;
+      }
+      &:focus{
+        background-color: $secondary-color-light;
+        color: #0a0c13;
+        font-weight: bold;
+      }
       &:first-child{
         border-radius: 50px 0 0 0 ;
       }
