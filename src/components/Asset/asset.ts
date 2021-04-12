@@ -58,6 +58,7 @@ export default class Asset extends Vue {
 
     @Watch("assets")
     onAssetsChange() {
-        console.log(this)
+        this.selectedAsset = this.$props.assets[0]
+        this.updateAsset()
     }
 }

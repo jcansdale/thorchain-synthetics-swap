@@ -41,6 +41,9 @@ export default class Synthetics extends Vue{
     }
 
     async calculateMintWithRune(runeAmount: number){
+        if(this.targetAsset.value === "THOR.RUNE") {
+            return
+        }
         let result = await this.$http.get(POOL_URL + this.targetAsset.value)
 
         // ( r * R * A)/(r + R)^2
@@ -56,8 +59,6 @@ export default class Synthetics extends Vue{
     }
 
     async calculateRedeem(){
-        console.log("BURN")
-
         let result = await this.$http.get(POOL_URL + this.originAsset.value)
 
         // (s * A *  R)/(a + A)^2
