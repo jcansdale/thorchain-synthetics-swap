@@ -1,0 +1,180 @@
+
+
+#label-address {
+  position: absolute;
+  top: 2vh;
+  right: 17vw;
+  width: 8vw;
+
+  p {
+    overflow: hidden;
+    color: $secondary-color;
+    line-height: 1.7em;
+    text-decoration: underline;
+  }
+}
+
+.login-button {
+  position: absolute;
+  top: 2vh;
+  right: 8vw;
+
+  button {
+    height: 40px;
+    width: 140px;
+
+    color: white;
+    background-color: rgba(0,0,0,0);
+    border: $secondary-color 2px solid;
+    border-radius: 10px;
+
+    line-height: 1.7em;
+  }
+
+  button:hover {
+    color: #0a0c13;
+    background-color: $secondary-color;
+  }
+
+}
+
+#main-content {
+  margin: 15vh auto 0;
+
+  #text-title {
+    font-size: 4em;
+    font-weight: 900;
+    color: white;
+    margin-bottom: 60px;
+  }
+
+  .buttons-mode {
+    width: 30vw;
+    margin: 0 auto 30px;
+
+    display: flex;
+    justify-content: space-around;
+
+    button {
+      height: 80px;
+      width: 80px;
+      border-radius: 40px;
+
+      border: $secondary-color-light 2px solid;
+      background-color: transparent;
+      color: white;
+      outline: none;
+    }
+
+    button:hover {
+      background-color: #0a0c13;
+      color: $secondary-color-light;
+    }
+
+    button:active {
+      background-color: $secondary-color;
+      color: #0a0c13;
+    }
+
+    .activeButton {
+      background-color: $secondary-color-light;
+      color: #0a0c13;
+      box-shadow: 0 0 40px 20px black;
+    }
+  }
+
+  #swap-window {
+    background-color: #010a13;
+    border-radius: $main-window-border-radius;
+    border: $secondary-color-light 1.5px solid;
+    box-shadow: 0 7px 30px 5px $secondary-color-glow;
+
+
+    .button-execution {
+      margin: 2em auto 2em;
+      height: 3em;
+      width: 10em;
+
+      background-color: $secondary-color;
+      padding-top: 0.5em;
+      color: black;
+
+      border-radius: 10px;
+      border: 0;
+    }
+
+    .button-connect {
+      margin: 2em auto 2em;
+      height: 3em;
+      width: 10em;
+
+      background-color: transparent;
+      padding-top: 0.5em;
+      color: white;
+
+      border-radius: 10px;
+      border: 2px $secondary-color solid;
+    }
+
+    .button-connect:hover {
+      background-color: $secondary-color;
+      color: #0a0c13;
+    }
+
+    .assets-container {
+      position: relative;
+      .symbol-arrow {
+        position: absolute;
+        top: 5.8em;
+        left: calc(50% - 1.75em);
+
+        width: 3.5em;
+        height: 3.5em;
+
+        border-radius: 20px;
+        background-color: $asset-origin-color;
+
+        .arrow-container {
+          width: 2.5em;
+          height: 2.5em;
+          margin: 0.5em;
+
+          line-height: 2.75em;
+
+          background-color: $secondary-color;
+          border-radius: 10px;
+        }
+      }
+    }
+  }
+
+  #label-fee {
+    margin-top: 3em;
+    color: $secondary-color-light;
+    font-size: 0.7em;
+  }
+}
+
+#social-container {
+  display: flex;
+  justify-content: space-around;
+
+  position: absolute;
+  bottom: 5vh;
+  right: 8vw;
+
+  width: 5vw;
+  font-size: 1.5em;
+
+  a {
+    text-decoration: none;
+    color: $secondary-color;
+  }
+
+}
+
+@supports (-moz-appearance:none) {
+  #main-content #swap-window .assets-container .symbol-arrow {
+    top: 5.5em;
+  }
+}
