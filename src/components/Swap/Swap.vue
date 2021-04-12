@@ -1,9 +1,9 @@
 <template>
   <div id="swap">
     <b-button-group class="tabs">
-      <b-button class="tab" @click="toggle('mint')">Mint</b-button>
-      <b-button class="tab" @click="toggle('swap')">Swap</b-button>
-      <b-button class="tab" @click="toggle('burn')">Burn</b-button>
+      <b-button class="tab" @click="toggle('mint')" :class="{active: activeAction === 'mint'}">Mint</b-button>
+      <b-button class="tab" @click="toggle('swap')" :class="{active: activeAction === 'swap'}">Swap</b-button>
+      <b-button class="tab" @click="toggle('burn')" :class="{active: activeAction === 'burn'}">Burn</b-button>
     </b-button-group>
 
     <div class="assets-container">
