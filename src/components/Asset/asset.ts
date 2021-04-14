@@ -35,6 +35,10 @@ export default class Asset extends Vue {
         this.updateAsset()
     }
 
+    verifyInput() {
+
+    }
+
     updateAsset(){
         this.$store.commit("updateAssetInput", new AssetUpdate(
             this.selectedAsset,

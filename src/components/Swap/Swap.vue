@@ -21,7 +21,7 @@
 
     <b-row>
       <button v-if="isWalletConnected" class="button-execution" v-on:click="swap" >SWAP IT</button>
-      <button v-if="!isWalletConnected" class="button-connect" @click="$bvModal.show('modalConnect')">Connect</button>
+      <button v-if="!isWalletConnected" class="button-connect" @click="$bvModal.show('modalWallet')">Connect Wallet</button>
     </b-row>
   </div>
 </template>

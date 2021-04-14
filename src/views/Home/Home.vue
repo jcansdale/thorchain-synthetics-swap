@@ -5,10 +5,10 @@
     </div>
 
     <div v-if="!isWalletConnected"  class="login-button">
-      <button @click="$bvModal.show('modalWallet')">Connect</button>
+      <button @click="$bvModal.show('modalWallet')">Connect Wallet</button>
     </div>
     <div v-if="isWalletConnected" class="login-button">
-      <button @click="$bvModal.show('modalWallet')">Wallet</button>
+      <button @click="$bvModal.show('modalWallet')">Wallet Info</button>
     </div>
 
     <ConnectModal id="connectWalletModal"></ConnectModal>
