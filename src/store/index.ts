@@ -69,12 +69,6 @@ export default new Vuex.Store({
       state.assetOptions = assetOptions;
       state.applicationInitialized = true
     },
-    resetAssetInput(state) {
-      state.originAsset = ""
-      state.originAssetAmount = 0
-      state.targetAsset = ""
-      state.targetAssetAmount = 0
-    },
     updateAssetInput(state, update: AssetUpdate) {
       if(update.isOriginAsset) {
         if(update.asset !== state.originAsset) {

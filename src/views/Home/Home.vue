@@ -1,14 +1,14 @@
 <template>
   <div class="home">
     <div id="label-address" v-if="isWalletConnected">
-      <p>{{userwallet.address}}</p>
+      <p>{{userwallet.thorchainAddress}}</p>
     </div>
 
     <div v-if="!isWalletConnected"  class="login-button">
-      <button @click="$bvModal.show('modalConnect')">Connect</button>
+      <button @click="$bvModal.show('modalWallet')">Connect</button>
     </div>
     <div v-if="isWalletConnected" class="login-button">
-      <button @click="alert('to be implemented')">Log out</button>
+      <button @click="$bvModal.show('modalWallet')">Wallet</button>
     </div>
 
     <ConnectModal id="connectWalletModal"></ConnectModal>
