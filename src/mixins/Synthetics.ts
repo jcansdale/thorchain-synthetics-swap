@@ -50,7 +50,7 @@ export default class Synthetics extends Vue{
         this.mint_synthAmount = (Number(runeAmount) * Number(result.data.runeDepth) * Number(result.data.assetDepth)) /
             Math.pow((Number(runeAmount) + Number(result.data.runeDepth)), 2)
 
-        this.$store.commit("updateAssetInput", new AssetUpdate(
+        await this.$store.dispatch("updateAssetInput", new AssetUpdate(
             this.targetAsset,
             Math.round(this.mint_synthAmount * 10000) / 10000,
             false,
@@ -65,7 +65,7 @@ export default class Synthetics extends Vue{
         this.redeem_runeAmount = (Number(this.originAssetAmount) * Number(result.data.assetDepth) * Number(result.data.runeDepth))/
             Math.pow((Number(this.originAssetAmount) + Number(result.data.assetDepth)), 2)
 
-        this.$store.commit("updateAssetInput", new AssetUpdate(
+        await this.$store.dispatch("updateAssetInput", new AssetUpdate(
             this.targetAsset,
             Math.round(this.redeem_runeAmount * 10000) / 10000,
             false,

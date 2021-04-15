@@ -1,3 +1,37 @@
-.modalConnect{
+#modalWallet{
+  background-color: rgba(50,50,50,0.1);
+  color: #0a0c13;
 
+  .modal-content {
+    display: block;
+
+    .half {
+      width: 50%;
+
+      float: left;
+      padding: 20px;
+
+      margin: 0 auto;
+
+      .section {
+        margin: 0 auto 20px;
+        text-align: center;
+
+        button {
+          background-color: $secondary-color;
+          border: 0;
+          border-radius: 5px;
+          margin-top: 2em;
+        }
+      }
+
+      .img-container {
+        width: 100%;
+        img {
+          width: 10em;
+        }
+      }
+    }
+
+  }
 }

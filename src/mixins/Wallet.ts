@@ -1,11 +1,12 @@
 import Component from "vue-class-component";
 import Vue from "vue";
-import {Secp256k1HdWallet} from "@cosmjs/launchpad";
 import {mapGetters} from "vuex";
+import {decryptFromKeystore, encryptToKeyStore, generatePhrase, Keystore} from "@xchainjs/xchain-crypto/lib"
+import {MultiWallet, WalletType} from "@/common/multi-wallet";
+
 
 @Component({
     components: {
-
     },
     computed: mapGetters({
         userwallet : 'getUserwallet',
@@ -22,8 +23,9 @@ export default class Wallet extends Vue {
         read.readAsBinaryString(file);
         read.onload = async (e: Event) => {
             if(typeof read.result === "string"){
-                let userwallet = await Secp256k1HdWallet.deserialize(read.result, password);
-                this.$store.commit('setUserwallet', userwallet);
+                let keystore: Keystore = JSON.parse(read.result)
+                let phrase = await decryptFromKeystore(keystore, password)
+                this.$store.commit('setUserwallet', new MultiWallet(WalletType.Keystore, phrase));
             }
         }
         read.onerror = (e) => {
@@ -36,10 +38,12 @@ export default class Wallet extends Vue {
     }
 
     async generateKeystore(password: string) {
-        const wallet = await Secp256k1HdWallet.generate(18)
-        const serialized = await wallet.serialize(password)
+        const phrase = generatePhrase()
+        alert(phrase)
+        const keystore = await encryptToKeyStore(phrase, password)
+
         let link = document.createElement('a')
-        link.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(serialized)
+        link.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(keystore))
         link.download = "keystore.txt"
         link.click()
     }
