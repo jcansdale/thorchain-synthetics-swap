@@ -34,11 +34,7 @@ export default class Asset extends Vue {
         this.selectedAsset = this.assets[0]
         this.updateAsset()
     }
-
-    verifyInput() {
-
-    }
-
+    
     async updateAsset(){
         await this.$store.dispatch("updateAssetInput", new AssetUpdate(
             this.selectedAsset,

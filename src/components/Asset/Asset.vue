@@ -42,7 +42,7 @@
       </div>
 
       <input type="number" v-if="isOriginAsset" class="asset-amount" v-model.number="amount" :onchange="updateAsset()" placeholder="Enter amount"/>
-      <input v-if="!isOriginAsset" class="asset-amount" v-model="targetAssetAmount" />
+      <input v-if="!isOriginAsset" class="asset-amount" v-model="targetAssetAmount" disabled/>
 
     </div>
     <hr>
