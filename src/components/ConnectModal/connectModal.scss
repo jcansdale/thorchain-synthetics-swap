@@ -2,34 +2,36 @@
   background-color: rgba(50,50,50,0.1);
   color: #0a0c13;
 
-  .half {
-    width: 50%;
+  .modal-content {
+    display: block;
 
-    float: left;
-    padding: 20px;
+    .half {
+      width: 50%;
 
-    margin: 0 auto;
+      float: left;
+      padding: 20px;
 
-    .section {
-      margin: 0 auto 20px;
-      text-align: center;
+      margin: 0 auto;
 
-      button {
-        background-color: grey;
-        border: 0;
-        border-radius: 5px;
-        margin-top: 2em;
+      .section {
+        margin: 0 auto 20px;
+        text-align: center;
+
+        button {
+          background-color: $secondary-color;
+          border: 0;
+          border-radius: 5px;
+          margin-top: 2em;
+        }
+      }
+
+      .img-container {
+        width: 100%;
+        img {
+          width: 10em;
+        }
       }
     }
-
-
-    .img-container {
-      width: 100%;
-      img {
-        width: 10em;
-      }
-    }
-
 
   }
 }

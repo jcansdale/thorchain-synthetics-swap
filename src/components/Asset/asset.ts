@@ -39,8 +39,8 @@ export default class Asset extends Vue {
 
     }
 
-    updateAsset(){
-        this.$store.commit("updateAssetInput", new AssetUpdate(
+    async updateAsset(){
+        await this.$store.dispatch("updateAssetInput", new AssetUpdate(
             this.selectedAsset,
             this.amount,
             this.isOriginAsset,

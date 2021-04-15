@@ -1,9 +1,12 @@
 <template>
   <div id="swap">
     <b-button-group class="tabs">
-      <b-button class="tab" @click="toggle('mint')" :class="{active: activeAction === 'mint'}">Mint</b-button>
-      <b-button class="tab" @click="toggle('swap')" :class="{active: activeAction === 'swap'}">Swap</b-button>
-      <b-button class="tab" @click="toggle('burn')" :class="{active: activeAction === 'burn'}">Burn</b-button>
+      <b-button class="tab" @click="toggle('mint')" :class="{active: activeAction === 'mint'}"
+                v-b-tooltip="{title: 'Mint new synthethics for Rune'}" >Mint</b-button>
+      <b-button class="tab" @click="toggle('swap')" :class="{active: activeAction === 'swap'}"
+                v-b-tooltip="{title: 'Swap from and to synthethics'}" >Swap</b-button>
+      <b-button class="tab" @click="toggle('burn')" :class="{active: activeAction === 'burn'}"
+                v-b-tooltip="{title: 'Redeem synthethics for Rune'}" >Burn</b-button>
     </b-button-group>
 
     <div class="assets-container">
@@ -21,7 +24,8 @@
 
     <b-row>
       <button v-if="isWalletConnected" class="button-execution" v-on:click="swap" >SWAP IT</button>
-      <button v-if="!isWalletConnected" class="button-connect" @click="$bvModal.show('modalWallet')">Connect Wallet</button>
+      <button v-if="!isWalletConnected" class="button-execution" @click="$bvModal.show('modalWallet')"
+              v-b-tooltip="{title: 'You need to connect to a wallet to continue'}">Connect Wallet</button>
     </b-row>
   </div>
 </template>

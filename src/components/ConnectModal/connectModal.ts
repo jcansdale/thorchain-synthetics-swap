@@ -19,6 +19,8 @@ declare global {
 
 export default class Home extends Mixins(Wallet) {
     password: string = "";
+
+    newPassword: string = "";
     file: File| null = null;
 
     async connectKeplr() {

@@ -1,6 +1,6 @@
 <template>
-  <b-modal id="modalWallet" size="xl" title="Connect Wallet">
-    <b-container class="bv-example-row" v-if="isWalletConnected">
+  <b-modal id="modalWallet" size="xl" title="Wallet">
+    <div class="bv-example-row" v-if="isWalletConnected">
       <div v-if="userwallet.walletType === 'ADDON'">
         <p>You are connected via Keplr</p>
 
@@ -12,8 +12,8 @@
 
 
       <b-button v-on:click="disconnect">Disconnect</b-button>
-    </b-container>
-    <b-container class="bv-example-row" v-if="!isWalletConnected">
+    </div>
+    <div class="modal-content" v-if="!isWalletConnected">
 
       <div class="half">
         <b-card class="section">
@@ -26,13 +26,16 @@
             <b-form-input id="password" type="password" v-model="password" />
           </b-form-group>
 
-          <b-button v-on:click="connect(file, password)">Connect</b-button>
+          <b-button v-on:click="connect(file, password)">Log In</b-button>
         </b-card>
 
 
         <b-card class="section">
           <p>Create a new BIP39 keystore</p>
-          <b-button v-on:click="generateKeystore(password)">Generate</b-button>
+          <b-form-group label="Password:" label-cols-sm="4">
+            <b-form-input id="password" type="password" v-model="newPassword" />
+          </b-form-group>
+          <b-button v-on:click="generateKeystore(newPassword)">Generate</b-button>
         </b-card>
 
       </div>
@@ -44,7 +47,7 @@
         </b-card>
       </div>
 
-    </b-container>
+    </div>
 
     <!-- MODAL FOOTER -->
     <template #modal-footer>

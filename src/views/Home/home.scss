@@ -3,8 +3,8 @@
 #label-address {
   position: absolute;
   top: 2vh;
-  right: 17vw;
-  width: 8vw;
+  right: 18vw;
+  width: 9vw;
 
   p {
     overflow: hidden;
@@ -21,7 +21,7 @@
 
   button {
     height: 40px;
-    width: 180px;
+    width: 140px;
 
     color: white;
     background-color: rgba(0,0,0,0);
@@ -121,6 +121,7 @@
 
     .assets-container {
       position: relative;
+      margin-top: -2px;
       .symbol-arrow {
         position: absolute;
         top: 5.8em;
@@ -137,9 +138,10 @@
           height: 2.5em;
           margin: 0.5em;
 
-          line-height: 2.75em;
+          line-height: 2.5em;
 
-          background-color: $secondary-color;
+          border: 2px solid $secondary-color;
+          color: $secondary-color;
           border-radius: 10px;
         }
       }

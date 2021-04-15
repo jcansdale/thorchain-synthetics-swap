@@ -4,12 +4,10 @@
       <p>{{userwallet.thorchainAddress}}</p>
     </div>
 
-    <div v-if="!isWalletConnected"  class="login-button">
-      <button @click="$bvModal.show('modalWallet')">Connect Wallet</button>
+    <div class="login-button">
+      <button @click="$bvModal.show('modalWallet')">Wallet</button>
     </div>
-    <div v-if="isWalletConnected" class="login-button">
-      <button @click="$bvModal.show('modalWallet')">Wallet Info</button>
-    </div>
+
 
     <ConnectModal id="connectWalletModal"></ConnectModal>
 
@@ -29,7 +27,7 @@
 
     <div id="social-container">
       <a href="https://github.com/block42-blockchain-company/thorchain-synthetics-swap"><BIconGithub/></a>
-      <a href="https://twitter.com/block42_company"><BIconTwitter/></a>
+      <a href="https://twitter.com/Brokkrfinance"><BIconTwitter/></a>
     </div>
   </div>
 </template>

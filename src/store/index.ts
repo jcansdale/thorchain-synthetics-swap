@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import {EVENT_RECALCULATE} from "@/common/consts";
 import {AssetUpdate} from "@/common/assetUpdate";
+import axios from "axios";
 
 Vue.use(Vuex);
 
@@ -13,10 +14,10 @@ export default new Vuex.Store({
     assetOptions: [],
     originAsset: "",
     originAssetAmount: 0,
+    originAssetPrice: 0,
     targetAsset: "",
     targetAssetAmount: 0,
-    estimatedOriginValue: 0,
-    estimatedTargetValue: 0,
+    targetAssetPrice: 0,
   },
   getters: {
     getApplicationInitializationState: state => {
@@ -40,10 +41,10 @@ export default new Vuex.Store({
       return state.userwallet !== null
     },
     getEstimatedOriginValue: state => {
-      return state.estimatedOriginValue
+      return Math.round(state.originAssetPrice * state.originAssetAmount * 100) / 100
     },
     getEstimatedTargetValue: state => {
-      return state.estimatedTargetValue
+      return Math.round(state.targetAssetPrice * state.targetAssetAmount * 100) / 100
     },
     getOriginAssetValue: state => {
       return state.originAsset
@@ -69,16 +70,20 @@ export default new Vuex.Store({
       state.assetOptions = assetOptions;
       state.applicationInitialized = true
     },
-    updateAssetInput(state, update: AssetUpdate) {
+  },
+  actions: {
+    updateAssetInput({dispatch, state}, update: AssetUpdate) {
       if(update.isOriginAsset) {
         if(update.asset !== state.originAsset) {
           state.originAsset = update.asset
+          dispatch("getOriginUSDPrice")
         }
         state.originAssetAmount = update.assetAmount
 
       } else {
         if(update.asset !== state.targetAsset) {
           state.targetAsset = update.asset
+          dispatch("getTargetUSDPrice")
         }
         state.targetAssetAmount = update.assetAmount
       }
@@ -89,7 +94,24 @@ export default new Vuex.Store({
         document.dispatchEvent(new Event(EVENT_RECALCULATE))
       }
     },
+    getOriginUSDPrice({state, getters}) {
+      let originSymbol = getters.getOriginAssetValue.text
+      console.log(originSymbol)
+      axios.get("https://api.binance.com/api/v3/ticker/price?symbol=" + originSymbol + "USDT").then(result => {
+        console.log(result)
+        state.originAssetPrice = result.data.price
+          }
+      )
+    },
+    getTargetUSDPrice({state, getters}) {
+      let targetSymbol = getters.getTargetAssetValue.text
+      axios.get("https://api.binance.com/api/v3/ticker/price?symbol=" + targetSymbol + "USDT").then(result => {
+            console.log(result)
+            state.targetAssetPrice = result.data.price
+          }
+      )
+    },
+
   },
-  actions: {},
   modules: {}
 });
