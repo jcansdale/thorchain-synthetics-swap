@@ -6,17 +6,16 @@ on:
       - created
 
 jobs:
-  docker:
+  push_to_registry:
+    name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
     steps:
-      - name: Login to DockerHub
-        uses: docker/login-action@v1 
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Push to Docker Hub
+        uses: docker/build-push-action@v1
         with:
-        username: block42company
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and push
-        id: docker_build
-        uses: docker/build-push-action@v2
-        with:
-        push: true
-        tags: block42blockchaincompany/brokkr:latest, block42blockchaincompany/brokkr:${GITHUB_REF##*/}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: block42blockchaincompany/brokkr
+          tag_with_ref: true
