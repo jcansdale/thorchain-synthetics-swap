@@ -1,3 +1,5 @@
+name: Publish new version
+
 on:
   release:
     types: 
@@ -7,16 +9,14 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-	-
-        name: Login to DockerHub
+      - name: Login to DockerHub
         uses: docker/login-action@v1 
         with:
-          username: block42company
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-	-
-	name: Build and push
+        username: block42company
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build and push
         id: docker_build
-	uses: docker/build-push-action@v2
-	with:
-          push: true
-          tags: block42blockchaincompany/brokkr:latest, block42blockchaincompany/brokkr:${GITHUB_REF##*/}
+        uses: docker/build-push-action@v2
+        with:
+        push: true
+        tags: block42blockchaincompany/brokkr:latest, block42blockchaincompany/brokkr:${GITHUB_REF##*/}
