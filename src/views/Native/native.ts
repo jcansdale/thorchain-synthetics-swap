@@ -1,5 +1,5 @@
 
-import Swap from "@/components/Swap/Swap.vue"
+import Swap from "@/components/NativeSwap/NativeSwap.vue"
 import {Component} from "vue-property-decorator";
 import Vue from 'vue'
 import {mapGetters} from "vuex";
@@ -20,7 +20,7 @@ import {BIconGithub, BIconTwitter} from "bootstrap-vue";
     })
 })
 
-export default class Home extends Vue {
+export default class Native extends Vue {
 
     beforeMount(){
         const apiUrl = 'https://testnet.midgard.thorchain.info/v2/pools';

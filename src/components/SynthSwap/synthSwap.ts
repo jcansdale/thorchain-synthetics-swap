@@ -1,10 +1,10 @@
-import Synthetics from "@/mixins/Synthetics";
 import Wallet from "@/mixins/Wallet"
 import {Component , Mixins} from 'vue-property-decorator'
 import {mapGetters} from "vuex";
 
 import Asset from "@/components/Asset/Asset.vue";
 import {EVENT_RECALCULATE} from "@/common/consts";
+import Synthetics from "@/mixins/Synthetics";
 
 @Component({
     components: {
@@ -14,7 +14,7 @@ import {EVENT_RECALCULATE} from "@/common/consts";
         synthAssetOptions : 'getAssetOptions',
     })
 })
-export default class Swap extends Mixins(Wallet, Synthetics) {
+export default class SynthSwap extends Mixins(Synthetics) {
 
     synthAssetOptions : object[] | undefined
 

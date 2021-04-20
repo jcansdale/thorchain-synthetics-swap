@@ -4,6 +4,7 @@ import {Secp256k1HdWallet, SigningCosmosClient} from "@cosmjs/launchpad";
 import {POOL_URL} from "@/common/consts";
 import {mapGetters} from "vuex";
 import {AssetUpdate} from "@/common/assetUpdate";
+import Wallet from "@/mixins/Wallet";
 
 @Component({
     computed: mapGetters ({
@@ -14,7 +15,7 @@ import {AssetUpdate} from "@/common/assetUpdate";
     })
 
 })
-export default class Synthetics extends Vue{
+export default class Synthetics extends Wallet{
     private originAsset!:any
     private originAssetAmount!: number
     private targetAsset!:any

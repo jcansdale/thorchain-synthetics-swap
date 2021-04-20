@@ -6,9 +6,16 @@ Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
-    path: "/",
-    name: "Home",
-    component: Home
+    path: "/synths",
+    name: "Synths",
+    component: () =>
+        import('../views/Synths/Synths.vue')
+  },
+  {
+    path: '/native',
+    name: 'Native',
+    component: () =>
+        import('../views/Native/Native.vue')
   },
   {
     path: '/terms',

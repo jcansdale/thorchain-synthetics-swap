@@ -1,0 +1,12 @@
+#swap{
+  width: 100%;
+
+  .tabs {
+    height: $main-window-border-radius;
+  }
+
+  .assets-container {
+    border-top-left-radius: $main-window-border-radius;
+    border-top-right-radius: $main-window-border-radius;
+  }
+}

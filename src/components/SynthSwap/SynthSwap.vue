@@ -2,11 +2,11 @@
   <div id="swap">
     <b-button-group class="tabs">
       <b-button class="tab" @click="toggle('mint')" :class="{active: activeAction === 'mint'}"
-                v-b-tooltip="{title: 'Mint new synthethics for Rune'}" >Mint</b-button>
+                v-b-tooltip="{title: 'Mint new synthetics for Rune'}" >Mint</b-button>
       <b-button class="tab" @click="toggle('swap')" :class="{active: activeAction === 'swap'}"
-                v-b-tooltip="{title: 'Swap from and to synthethics'}" >Swap</b-button>
+                v-b-tooltip="{title: 'Swap from and to synthetics'}" >Swap</b-button>
       <b-button class="tab" @click="toggle('burn')" :class="{active: activeAction === 'burn'}"
-                v-b-tooltip="{title: 'Redeem synthethics for Rune'}" >Burn</b-button>
+                v-b-tooltip="{title: 'Redeem synthetics for Rune'}" >Burn</b-button>
     </b-button-group>
 
     <div class="assets-container">
@@ -30,5 +30,5 @@
   </div>
 </template>
 
-<script lang="ts" src="./swap.ts"></script>
-<style lang="scss" src="./swap.scss"></style>
+<script lang="ts" src="./synthSwap.ts"></script>
+<style lang="scss" src="./synthSwap.scss"></style>

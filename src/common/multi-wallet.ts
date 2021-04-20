@@ -17,6 +17,8 @@ export enum WalletType {
 
 export class MultiWallet {
     public walletType: WalletType
+    public networkType: "mainnet" | "testnet" | undefined
+
     private phrase: string | null = null
     public thorchainAddress: string  = ""
 
@@ -25,43 +27,44 @@ export class MultiWallet {
     public etherum: ETHClient | null = null
     public binance: BNBClient | null = null
 
-    constructor(walletType: WalletType, phrase: string | undefined) {
+    constructor(walletType: WalletType, networkType: "mainnet" | "testnet", phrase: string | undefined) {
         this.walletType = walletType
+        this.networkType = networkType
 
         if(this.walletType === WalletType.Keystore) {
             this.phrase = phrase!
 
             let clientURL: ClientUrl = {
                 mainnet: {node: "http://157.245.24.22:1317", rpc: ""},
-                testnet: {node: "http://157.245.24.22:26657", rpc: ""}
+                testnet: {node: "https://testnet.thornode.thorchain.info", rpc: ""}
             }
             let explorerURL: ExplorerUrl = {
                 mainnet: "https://viewblock.io/thorchain",
                 testnet: "https://viewblock.io/thorchain",
             }
             this.thorchain = new THORClient({
-                network: "mainnet",
+                network: this.networkType,
                 clientUrl: clientURL,
                 explorerUrl: explorerURL,
                 phrase
             })
 
             this.bitcoin = new BTCClient({
-                network: "mainnet",
+                network: this.networkType,
                 sochainUrl: "https://sochain.com/api/v2/",
                 blockstreamUrl: "https://blockstream.info/",
                 phrase
             })
 
             this.etherum = new ETHClient({
-                network: "mainnet",
+                network: this.networkType,
                 ethplorerUrl: "https://ethplorer.io/",
                 explorerUrl: {mainnet: "https://etherscan.io/", testnet: "https://etherscan.io/"},
                 phrase
             })
 
             this.binance = new BNBClient({
-                network: "mainnet",
+                network: this.networkType,
                 phrase
             })
         }

@@ -1,5 +1,5 @@
 
-# Thorchain Synthetics Swap
+# Thorchain Synthetics NativeSwap
 
 With the thorchain multi-chain network synthetic assets are introduced. This web application allows users to 
 swap synths to other synths, native assets and also buy and redeem the synths.

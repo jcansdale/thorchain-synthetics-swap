@@ -1,6 +1,7 @@
 <template>
   <b-modal id="modalWallet" size="xl" title="Wallet">
     <div class="bv-example-row" v-if="isWalletConnected">
+      <button @click="getBalances">Refresh</button>
       <div v-if="userwallet.walletType === 'ADDON'">
         <p>You are connected via Keplr</p>
 
@@ -9,6 +10,12 @@
       <div v-if="userwallet.walletType === 'KEYSTORE'">
         <p>You are connected via BIP39 Keystore</p>
       </div>
+
+      <p>Address: {{userwallet.thorchainAddress}}</p>
+      <h3>Assets</h3>
+      <p>{{thorchainBalance}} RUNE</p>
+      <p>{{binanceBalance}} BNB</p>
+
 
 
       <b-button v-on:click="disconnect">Disconnect</b-button>

@@ -1,7 +1,7 @@
 import {Component, Mixins} from "vue-property-decorator";
 import {mapGetters} from "vuex";
 import Wallet from "@/mixins/Wallet";
-import { Window as KeplrWindow } from "@keplr-wallet/types/build/window";
+import {Window as KeplrWindow} from "@keplr-wallet/types/build/window";
 import {MultiWallet, WalletType} from "@/common/multi-wallet";
 
 declare global {
@@ -57,7 +57,7 @@ export default class Home extends Mixins(Wallet) {
         })
 
         window.keplr?.enable("chaosnet")
-        this.$store.commit('setUserwallet',  new MultiWallet(WalletType.Addon, undefined));
+        this.$store.commit('setUserwallet',  new MultiWallet(WalletType.Addon, "testnet", undefined));
     }
 
 }
