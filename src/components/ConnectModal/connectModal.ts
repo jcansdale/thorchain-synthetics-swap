@@ -3,6 +3,7 @@ import {mapGetters} from "vuex";
 import Wallet from "@/mixins/Wallet";
 import {Window as KeplrWindow} from "@keplr-wallet/types/build/window";
 import {MultiWallet, WalletType} from "@/common/multi-wallet";
+import {CHAIN_ID_THORCHAIN_CHAOSNET, NODE_URL_TESTNET} from "@/common/consts";
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -18,10 +19,16 @@ declare global {
 })
 
 export default class Home extends Mixins(Wallet) {
+    // Refactor
     password: string = "";
-
     newPassword: string = "";
+    localStoragePassword: string = "";
+
     file: File| null = null;
+
+    mounted() {
+        this.localStorageKeystore = localStorage.getItem("brokkrWallet")
+    }
 
     async connectKeplr() {
         const currencyRune = {
@@ -30,9 +37,9 @@ export default class Home extends Mixins(Wallet) {
             coinDecimals: 8,
         }
         await window.keplr?.experimentalSuggestChain({
-            chainId: "thorchain",
+            chainId: CHAIN_ID_THORCHAIN_CHAOSNET,
             chainName: "Thorchain",
-            rpc: "http://157.245.24.22:1317",
+            rpc: NODE_URL_TESTNET,
             rest: "http://157.245.24.22:1317",
             stakeCurrency: currencyRune,
             bip44: {
@@ -56,7 +63,7 @@ export default class Home extends Mixins(Wallet) {
             }
         })
 
-        window.keplr?.enable("chaosnet")
+        window.keplr?.enable(CHAIN_ID_THORCHAIN_CHAOSNET)
         this.$store.commit('setUserwallet',  new MultiWallet(WalletType.Addon, "testnet", undefined));
     }
 

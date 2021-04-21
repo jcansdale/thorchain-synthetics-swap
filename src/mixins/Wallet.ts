@@ -15,9 +15,11 @@ import {Watch} from "vue-property-decorator";
     })
 })
 export default class Wallet extends Vue {
-    private userwallet!: any;
+    public userwallet!: null | MultiWallet;
     private thorchainBalance: number = 0
     private binanceBalance: number = 0
+
+    public localStorageKeystore: string | null = null
 
     async connect(file: File, password: string){
         const read: FileReader = new FileReader();
@@ -26,7 +28,8 @@ export default class Wallet extends Vue {
             if(typeof read.result === "string"){
                 let keystore: Keystore = JSON.parse(read.result)
                 let phrase = await decryptFromKeystore(keystore, password)
-                this.$store.commit('setUserwallet', new MultiWallet(WalletType.Keystore, "testnet", phrase));
+                this.$store.commit('setUserwallet', new MultiWallet(WalletType.Keystore, "testnet", phrase))
+                localStorage.setItem("brokkrWallet", JSON.stringify(keystore))
             }
         }
         read.onerror = (e) => {
@@ -36,6 +39,12 @@ export default class Wallet extends Vue {
 
     disconnect() {
         this.$store.commit('setUserwallet', null);
+    }
+
+    async connectWithLocalStorageKeystore(password: string) {
+        let keystore: Keystore = JSON.parse(this.localStorageKeystore!)
+        let phrase = await decryptFromKeystore(keystore, password)
+        this.$store.commit('setUserwallet', new MultiWallet(WalletType.Keystore, "testnet", phrase))
     }
 
     async generateKeystore(password: string) {
@@ -50,24 +59,19 @@ export default class Wallet extends Vue {
     }
 
 
-    buf2hex(buffer: Uint8Array) { // buffer is an ArrayBuffer
-        return '0x' + Array.prototype.map.call(new Uint8Array(buffer),
-            x => ('00' + x.toString(16)).slice(-2)).join('');
-    }
-
     // Swap RUNE -> BNB MEMO:    =:BNB.BNB:tbnb1zg83dlw5vt6x8sfj44ev9suscfwl53phdh6ku8:6370183
 
     @Watch("userwallet")
     getBalances() {
         if(this.userwallet !== null) {
-            this.getThorchainBalance()
-            this.getBinancechainBalance()
+            this.setThorchainBalance()
+            this.setBinancechainBalance()
         }
     }
 
-    async getThorchainBalance() {
-        if(this.userwallet.walletType === WalletType.Keystore) {
-            this.userwallet.thorchain.getBalance().then((response: any) => {
+    async setThorchainBalance() {
+        if(this.userwallet!.walletType === WalletType.Keystore) {
+            this.userwallet!.thorchain!.getBalance().then((response: any) => {
                 this.thorchainBalance = response[0].amount.amount() / Math.pow(10, 8)
             })
         } else {
@@ -75,9 +79,9 @@ export default class Wallet extends Vue {
         }
     }
 
-    async getBinancechainBalance() {
-        if(this.userwallet.walletType === WalletType.Keystore) {
-            this.userwallet.binance.getBalance().then((response: any) => {
+    async setBinancechainBalance() {
+        if(this.userwallet!.walletType === WalletType.Keystore) {
+            this.userwallet!.binance!.getBalance().then((response: any) => {
                 this.binanceBalance = response[0].amount.amount() / Math.pow(10, 8)
             })
         } else {

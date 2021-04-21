@@ -1,10 +1,13 @@
 import Component from "vue-class-component";
-import Vue from "vue";
-import {Secp256k1HdWallet, SigningCosmosClient} from "@cosmjs/launchpad";
 import {POOL_URL} from "@/common/consts";
 import {mapGetters} from "vuex";
 import {AssetUpdate} from "@/common/assetUpdate";
 import Wallet from "@/mixins/Wallet";
+import {Asset, baseAmount, BaseAmount, Denomination} from "@xchainjs/xchain-util";
+import {getSwapMemo} from "@/common/utils";
+import {TxHash} from "@xchainjs/xchain-client";
+import {msgNativeTxFromJson} from "@xchainjs/xchain-thorchain";
+import {getThorchainInboundAddresses} from "@/common/thorchain-service";
 
 @Component({
     computed: mapGetters ({
@@ -24,7 +27,6 @@ export default class Natives extends Wallet {
 
     async calculate(){
         if(this.originAsset.value === this.targetAsset.value) {
-
             await this.$store.dispatch("updateAssetInput", new AssetUpdate(
                 this.targetAsset,
                 this.originAssetAmount,
@@ -40,8 +42,6 @@ export default class Natives extends Wallet {
 
             this.runeAmount = (Number(this.originAssetAmount) * Number(response.data.runeDepth) * Number(response.data.assetDepth)) /
                 Math.pow((Number(this.originAssetAmount) + Number(response.data.assetDepth)), 2)
-
-            console.log(this.runeAmount)
 
             // Swap L1 into Rune otherwise double swap
             if(this.targetAsset.text === "RUNE") {
@@ -70,11 +70,30 @@ export default class Natives extends Wallet {
             false,
             false
         ))
-
     }
 
     async swap() {
+        if (!((this.originAsset.text === "RUNE" && this.targetAsset.text === "BNB") ||
+             (this.originAsset.text === "BNB" && this.targetAsset.text === "RUNE"))) {
+            alert("Swapping this pair is not supported yet!")
+            return
+        }
 
+        let originAsset: Asset = {
+            chain: this.originAsset.value.split("\.")[0],
+            symbol: this.originAsset.value.split("\.")[1],
+            ticker: this.originAsset.text
+        }
+
+        let targetAsset: Asset = {
+            chain: this.targetAsset.value.split("\.")[0],
+            symbol: this.targetAsset.value.split("\.")[1],
+            ticker: this.targetAsset.text
+        }
+
+        const explorerURL = await this.userwallet?.deposit(originAsset, targetAsset, this.originAssetAmount)
+        this.$bvToast.toast(`Find the result of the ${originAsset.ticker} -> ${targetAsset.ticker} Tx here: ${explorerURL}`)
+        console.log(explorerURL)
     }
 
 

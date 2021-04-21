@@ -5,6 +5,7 @@ import Vue from 'vue'
 import {mapGetters} from "vuex";
 import ConnectModal from "@/components/ConnectModal/ConnectModal.vue";
 import {BIconGithub, BIconTwitter} from "bootstrap-vue";
+import {getThorchainInboundAddresses} from "@/common/thorchain-service";
 
 @Component({
     components: {

@@ -96,6 +96,10 @@ export default new Vuex.Store({
     },
     getOriginUSDPrice({state, getters}) {
       let originSymbol = getters.getOriginAssetValue.text
+      if(originSymbol === "USDT") {
+        state.originAssetPrice = 1
+        return
+      }
       axios.get("https://api.binance.com/api/v3/ticker/price?symbol=" + originSymbol + "USDT").then(result => {
         state.originAssetPrice = result.data.price
           }
@@ -103,6 +107,10 @@ export default new Vuex.Store({
     },
     getTargetUSDPrice({state, getters}) {
       let targetSymbol = getters.getTargetAssetValue.text
+      if(targetSymbol === "USDT") {
+        state.targetAssetPrice = 1
+        return
+      }
       axios.get("https://api.binance.com/api/v3/ticker/price?symbol=" + targetSymbol + "USDT").then(result => {
             state.targetAssetPrice = result.data.price
           }

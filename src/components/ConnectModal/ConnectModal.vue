@@ -23,6 +23,15 @@
     <div class="modal-content" v-if="!isWalletConnected">
 
       <div class="half">
+
+        <b-card v-if="localStorageKeystore !== null" class="section">
+          <p>Log in with the stored Keystore.</p>
+          <b-form-group label="Password:" label-cols-sm="4">
+            <b-form-input type="password" v-model="localStoragePassword" />
+          </b-form-group>
+          <b-button v-on:click="connectWithLocalStorageKeystore(localStoragePassword)">Log In</b-button>
+        </b-card>
+
         <b-card class="section">
           <p>Provide a keystore and use <a href="https://xchainjs.org">xchainjs</a> wallet.</p>
 
@@ -30,7 +39,7 @@
             <b-form-file v-model="file" id="keystore-file"></b-form-file>
           </b-form-group>
           <b-form-group label="Password:" label-cols-sm="4">
-            <b-form-input id="password" type="password" v-model="password" />
+            <b-form-input type="password" v-model="password" />
           </b-form-group>
 
           <b-button v-on:click="connect(file, password)">Log In</b-button>
@@ -40,7 +49,7 @@
         <b-card class="section">
           <p>Create a new BIP39 keystore</p>
           <b-form-group label="Password:" label-cols-sm="4">
-            <b-form-input id="password" type="password" v-model="newPassword" />
+            <b-form-input type="password" v-model="newPassword" />
           </b-form-group>
           <b-button v-on:click="generateKeystore(newPassword)">Generate</b-button>
         </b-card>
